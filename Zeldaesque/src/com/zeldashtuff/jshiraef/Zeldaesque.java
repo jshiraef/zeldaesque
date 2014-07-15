@@ -28,7 +28,7 @@ public class Zeldaesque extends BasicGame{
 	public void init(GameContainer arg0) throws SlickException {
 		
 		try {
-		room = new TiledMap("lvl/room1.tmx");
+		room = new TiledMap("lvl/room2.tmx");
 		}catch (SlickException e){
 			System.out.println("error loading level");
 		}
