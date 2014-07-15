@@ -1,12 +1,14 @@
 package com.zeldashtuff.jshiraef;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.tiled.*;
 import org.lwjgl.*;
 
 public class Zeldaesque extends BasicGame{
 	
 	public static final String gameName = "Zelder Clone";
 	public static AppGameContainer appgc;
+	private TiledMap room;
 	
 	public Zeldaesque(String gameName)
 			{
@@ -15,14 +17,22 @@ public class Zeldaesque extends BasicGame{
 			}
 
 	@Override
-	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
-		// TODO Auto-generated method stub
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		
+		room.render(0, 0);
+		
 		
 	}
 
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
-		// TODO Auto-generated method stub
+		
+		try {
+		room = new TiledMap("lvl/room1.tmx");
+		}catch (SlickException e){
+			System.out.println("error loading level");
+		}
+		
 		
 	}
 
