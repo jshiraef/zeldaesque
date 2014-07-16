@@ -10,9 +10,13 @@ public class Zeldaesque extends BasicGame{
 	public static AppGameContainer appgc;
 	private TiledMap room;
 	
+	private boolean[][] blocked;
+	private static final int SIZE = 34;
+	private float x = 34f, y =34f;
 	
 	
-	Animation up, sprite;
+	
+	Animation up, down, left, right, sprite;
 	
 	int[] duration = {300, 300};
 	
@@ -27,9 +31,15 @@ public class Zeldaesque extends BasicGame{
 		
 		room.render(0, 0);
 		
-		sprite.draw(5, 5);
+		sprite.draw(10, 10);
 		
 		
+	}
+	
+	private boolean isBlocked(float x, float y) {
+		int xBlock = (int)x/ SIZE;
+		int yBlock = (int)y/ SIZE;
+		return blocked [xBlock][yBlock];
 	}
 
 	@Override
@@ -51,10 +61,49 @@ public class Zeldaesque extends BasicGame{
 	}
 
 	@Override
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException 
+	{
 		
-//		Input input = container.getInput();
+		Input input = container.getInput();
 		
+		if (input.isKeyDown(Input.KEY_UP))
+		{
+			sprite = up;
+			if(!isBlocked(x, y - delta * .1f))
+			{
+		
+			sprite.update(delta);
+			// 
+			y -= delta * 0.1f;
+			}
+		}
+		else if (input.isKeyDown(Input.KEY_DOWN))
+		{
+			sprite = down;
+			if (!isBlocked(x, y + SIZE + delta * .1f))
+			{
+				sprite.update(delta);
+				y += delta * .1f;
+			}
+		}
+		else if (input.isKeyDown(Input.KEY_LEFT))
+		{
+			sprite = left;
+			if(!isBlocked(x - delta * .1f, y))
+			{
+				sprite.update(delta);
+				x -= delta * .1f;
+			}
+		}
+		else if (input.isKeyDown(Input.KEY_RIGHT))
+		{
+			sprite = right;
+			if (!isBlocked(x + SIZE + delta * .1f, y))
+			{
+				sprite.update(delta);
+				x += delta *1f;
+			}
+		}
 	sprite.update(delta);
 		
 	}
