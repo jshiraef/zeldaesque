@@ -31,7 +31,7 @@ public class Zeldaesque extends BasicGame{
 		
 		room.render(0, 0);
 		
-		sprite.draw(10, 10);
+		sprite.draw(x, y);
 		
 		
 	}
@@ -69,42 +69,29 @@ public class Zeldaesque extends BasicGame{
 		if (input.isKeyDown(Input.KEY_UP))
 		{
 			sprite = up;
-			if(!isBlocked(x, y - delta * .1f))
-			{
-		
-			sprite.update(delta);
-			// 
-			y -= delta * 0.1f;
-			}
+		    sprite.update(delta);
+		    
+		    y -= delta * 0.1f;
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
-			sprite = down;
-			if (!isBlocked(x, y + SIZE + delta * .1f))
-			{
-				sprite.update(delta);
-				y += delta * .1f;
-			}
+			sprite = up;
+		    sprite.update(delta);
+		    y += delta * 0.1f;
 		}
 		else if (input.isKeyDown(Input.KEY_LEFT))
 		{
-			sprite = left;
-			if(!isBlocked(x - delta * .1f, y))
-			{
-				sprite.update(delta);
-				x -= delta * .1f;
-			}
+			sprite = up;
+		    sprite.update(delta);
+		    x -= delta * 0.1f;
 		}
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
-			sprite = right;
-			if (!isBlocked(x + SIZE + delta * .1f, y))
-			{
-				sprite.update(delta);
-				x += delta *1f;
-			}
+			sprite = up;
+		    sprite.update(delta);
+		    x += delta * 0.1f;
 		}
-	sprite.update(delta);
+	
 		
 	}
 	
