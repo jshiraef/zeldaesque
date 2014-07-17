@@ -12,7 +12,11 @@ public class Zeldaesque extends BasicGame{
 	
 	private boolean[][] blocked;
 	private static final int SIZE = 34;
-	private float x = 34f, y =34f;
+	private float x = 34f;
+	private float y = 34f;
+	
+	
+	
 	
 	
 	
@@ -52,10 +56,12 @@ public class Zeldaesque extends BasicGame{
 		sprite =  up;
 		
 		try {
-		room = new TiledMap("lvl/room2.tmx");
+		room = new TiledMap("lvl/room3.tmx");
 		}catch (SlickException e){
 			System.out.println("error loading level");
 		}
+		
+		
 		
 		
 	}
