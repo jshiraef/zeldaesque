@@ -4,102 +4,88 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.*;
 import org.lwjgl.*;
 
-public class Zeldaesque extends BasicGame{
-	
+public class Zeldaesque extends BasicGame
+{
 	public static final String gameName = "Zelder Clone";
 	public static AppGameContainer appgc;
 	private TiledMap room;
-	int currentRoom = 0;
+	public int currentRoom = 0;
 	
 	private boolean[][] blocked;
 	private static final int SIZE = 64;
 	private float x = 64f;
 	private float y = 64f;
 	
+	private boolean inBossRoom = false;
+
 	private float bossX = 250;
 	private float bossY = 250;
-	
-	private boolean inBossRoom = false;
-	
 	private int direction = 1;
 	
-	
-	
-	
-	
-	
-	Animation up, down, left, right, sprite, boss, pacing;
+	Animation up, down, left, right, sprite, boss, pacing; //redundant variables?
 	
 	int[] duration = {300, 300};
 	int[] bossDuration = {300, 300, 300};
 	
 	public Zeldaesque(String gameName)
-			{
-			super(gameName);
-
-			}
+	{
+		super(gameName);
+	}
 
 	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		
+	public void render(GameContainer container, Graphics g) throws SlickException
+	{
 		room.render(0, 0);
 		
 		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 100);
 		
 		sprite.draw(x, y);
 		
-		if (inBossRoom){
-			
+		if(inBossRoom)
+		{
 			boss.draw(bossX, bossY);
 			
-			switch(direction) {
-			
+			switch(direction)
+			{
 			case 1: 
-				
 				if (bossX < 400)
-					bossX ++;
-				else direction = 2;
+					bossX++;
+				else
+					direction = 2;
 				
 			case 2:
 				if (bossX > 300)
 					bossX--;
-				else direction = 1;
-			
+				else
+					direction = 1;
 			}
-			
-			
 		}
 		
 	}
 	
-	private boolean isBlocked(float x, float y) {
-		int xBlock = (int)x/ SIZE;
-		int yBlock = (int)y/ SIZE;
-		return blocked [xBlock][yBlock];
+	private boolean isBlocked(float x, float y)
+	{
+		int xBlock = (int)x / SIZE;
+		int yBlock = (int)y / SIZE;
+		return blocked[xBlock][yBlock];
 	}
-
-	public static String switchRoom(int roomNumber){
-		
+	
+	public static String switchRoom(int roomNumber)
+	{
 		String roomName = "";
 		
-		switch (roomNumber) {
-		
+		switch (roomNumber)
+		{
 		case 1 :
-			roomName = "room1";
-			break;
-		
+			return "room1";
 		case 2 : 
-			roomName = "room2";
-			System.out.println("It should be room 2!");
-			break;
+			return "room2";
+			//System.out.println("It should be room 2!");
 		case 3 : 
-			roomName = "room3";
-			break;
+			return "room3";
 		default:
-			roomName = "room3";
+			return "room3";
 		}
-		
-		return roomName;
 	}
 	
 	@Override
@@ -116,14 +102,12 @@ public class Zeldaesque extends BasicGame{
 		sprite =  up;
 		boss = pacing;
 		
-		
-		
-		
-		
-		
-		try {
-		room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
-		}catch (SlickException e){
+		try
+		{
+			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
+		}
+		catch (SlickException e)
+		{
 			System.out.println("error loading level");
 		}
 		
@@ -146,16 +130,13 @@ public class Zeldaesque extends BasicGame{
 
 	public void update(GameContainer container, int delta) throws SlickException 
 	{
-		
-		
-		if(y < -50){
+		if(y < -50)
+		{
 			inBossRoom = true;
 			currentRoom = 2;
 			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
 		}
 		
-		
-		switchRoom(currentRoom);
 		Input input = container.getInput();
 		
 		if (input.isKeyDown(Input.KEY_UP))
@@ -194,22 +175,20 @@ public class Zeldaesque extends BasicGame{
                  x += delta * 0.1f;
              }
 		}
-	
-		
 	}
 	
-	public static void main(String[] args) {
-		
-		try {
+	public static void main(String[] args)
+	{
+		try
+		{
 			appgc = new AppGameContainer(new Zeldaesque(gameName));
 			appgc.setDisplayMode(11*64, 7*64, false);
 			appgc.start();
-		} catch (SlickException e) {
+		}
+		catch (SlickException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-		
-		
 	}
-	}
+}
