@@ -16,14 +16,22 @@ public class Zeldaesque extends BasicGame{
 	private float x = 64f;
 	private float y = 64f;
 	
+	private float bossX = 250;
+	private float bossY = 250;
+	
+	private boolean inBossRoom = false;
+	
+	private int direction = 1;
 	
 	
 	
 	
 	
-	Animation up, down, left, right, sprite;
+	
+	Animation up, down, left, right, sprite, boss, pacing;
 	
 	int[] duration = {300, 300};
+	int[] bossDuration = {300, 300, 300};
 	
 	public Zeldaesque(String gameName)
 			{
@@ -40,6 +48,27 @@ public class Zeldaesque extends BasicGame{
 		
 		sprite.draw(x, y);
 		
+		if (inBossRoom){
+			
+			boss.draw(bossX, bossY);
+			
+			switch(direction) {
+			
+			case 1: 
+				
+				if (bossX < 400)
+					bossX ++;
+				else direction = 2;
+				
+			case 2:
+				if (bossX > 300)
+					bossX--;
+				else direction = 1;
+			
+			}
+			
+			
+		}
 		
 	}
 	
@@ -60,7 +89,7 @@ public class Zeldaesque extends BasicGame{
 			break;
 		
 		case 2 : 
-			roomName = "room2";
+			roomName = "room4";
 			System.out.println("It should be room 2!");
 			break;
 		case 3 : 
@@ -79,8 +108,13 @@ public class Zeldaesque extends BasicGame{
 		Image[] movementUp ={new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
 		Image[] movementDown = {new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
 		
+		Image[] bossPacing = {new Image("res/girlBoss.png"), new Image("res/girlBoss2.png"), new Image("res/girlBoss3.png")};
+		
 		up = new Animation(movementUp, duration, false);
+		pacing = new Animation(bossPacing, bossDuration, true);
+		
 		sprite =  up;
+		boss = pacing;
 		
 		
 		
@@ -115,6 +149,7 @@ public class Zeldaesque extends BasicGame{
 		
 		
 		if(y < -50){
+			inBossRoom = true;
 			currentRoom = 2;
 			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
 		}
