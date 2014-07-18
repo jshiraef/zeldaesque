@@ -89,7 +89,7 @@ public class Zeldaesque extends BasicGame{
 			break;
 		
 		case 2 : 
-			roomName = "room4";
+			roomName = "room2";
 			System.out.println("It should be room 2!");
 			break;
 		case 3 : 
