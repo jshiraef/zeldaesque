@@ -9,6 +9,7 @@ public class Zeldaesque extends BasicGame{
 	public static final String gameName = "Zelder Clone";
 	public static AppGameContainer appgc;
 	private TiledMap room;
+	int currentRoom = 0;
 	
 	private boolean[][] blocked;
 	private static final int SIZE = 64;
@@ -35,6 +36,8 @@ public class Zeldaesque extends BasicGame{
 		
 		room.render(0, 0);
 		
+		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 100);
+		
 		sprite.draw(x, y);
 		
 		
@@ -46,6 +49,30 @@ public class Zeldaesque extends BasicGame{
 		return blocked [xBlock][yBlock];
 	}
 
+	public static String switchRoom(int roomNumber){
+		
+		String roomName = "";
+		
+		switch (roomNumber) {
+		
+		case 1 :
+			roomName = "room1";
+			break;
+		
+		case 2 : 
+			roomName = "room2";
+			System.out.println("It should be room 2!");
+			break;
+		case 3 : 
+			roomName = "room3";
+			break;
+		default:
+			roomName = "room3";
+		}
+		
+		return roomName;
+	}
+	
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
 		
@@ -55,8 +82,13 @@ public class Zeldaesque extends BasicGame{
 		up = new Animation(movementUp, duration, false);
 		sprite =  up;
 		
+		
+		
+		
+		
+		
 		try {
-		room = new TiledMap("lvl/room3.tmx");
+		room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
 		}catch (SlickException e){
 			System.out.println("error loading level");
 		}
@@ -81,6 +113,14 @@ public class Zeldaesque extends BasicGame{
 	public void update(GameContainer container, int delta) throws SlickException 
 	{
 		
+		
+		if(y < -50){
+			currentRoom = 2;
+			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
+		}
+		
+		
+		switchRoom(currentRoom);
 		Input input = container.getInput();
 		
 		if (input.isKeyDown(Input.KEY_UP))
