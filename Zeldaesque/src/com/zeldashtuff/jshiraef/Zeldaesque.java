@@ -11,9 +11,9 @@ public class Zeldaesque extends BasicGame{
 	private TiledMap room;
 	
 	private boolean[][] blocked;
-	private static final int SIZE = 34;
-	private float x = 34f;
-	private float y = 34f;
+	private static final int SIZE = 64;
+	private float x = 64f;
+	private float y = 64f;
 	
 	
 	
@@ -61,12 +61,23 @@ public class Zeldaesque extends BasicGame{
 			System.out.println("error loading level");
 		}
 		
+		 blocked = new boolean[room.getWidth()][room.getHeight()];
 		
-		
+		for (int xAxis=0;xAxis<room.getWidth(); xAxis++)
+        {
+             for (int yAxis=0;yAxis<room.getHeight(); yAxis++)
+             {
+                 int tileID = room.getTileId(xAxis, yAxis, 0);
+                 String value = room.getTileProperty(tileID, "stone", "false");
+                 if ("true".equals(value))
+                 {
+                     blocked[xAxis][yAxis] = true;
+                 }
+             }
+         }
 		
 	}
 
-	@Override
 	public void update(GameContainer container, int delta) throws SlickException 
 	{
 		
@@ -75,27 +86,38 @@ public class Zeldaesque extends BasicGame{
 		if (input.isKeyDown(Input.KEY_UP))
 		{
 			sprite = up;
-		    sprite.update(delta);
-		    
-		    y -= delta * 0.1f;
+			if (!isBlocked(x, y - delta * 0.1f))
+            {
+                sprite.update(delta);
+                
+                y -= delta * 0.1f;
+            }
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
-			sprite = up;
-		    sprite.update(delta);
-		    y += delta * 0.1f;
+			 if (!isBlocked(x, y + SIZE + delta * 0.1f))
+             {
+                 sprite.update(delta);
+                 y += delta * 0.1f;
+             }
 		}
 		else if (input.isKeyDown(Input.KEY_LEFT))
 		{
 			sprite = up;
-		    sprite.update(delta);
-		    x -= delta * 0.1f;
+			if (!isBlocked(x - delta * 0.1f, y))
+            {
+                sprite.update(delta);
+                x -= delta * 0.1f;
+            }
 		}
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
 			sprite = up;
-		    sprite.update(delta);
-		    x += delta * 0.1f;
+			 if (!isBlocked(x + SIZE + delta * 0.1f, y))
+             {
+                 sprite.update(delta);
+                 x += delta * 0.1f;
+             }
 		}
 	
 		
