@@ -48,16 +48,17 @@ public class Zeldaesque extends BasicGame
 			switch(direction)
 			{
 			case 1: 
-				if (bossX < 400)
-					bossX++;
+				if (bossX < 350)
+					bossX += .05;
 				else
 					direction = 2;
-				
+				break;
 			case 2:
-				if (bossX > 300)
-					bossX--;
+				if (bossX > 200)
+					bossX -= .05;
 				else
 					direction = 1;
+				break;
 			}
 		}
 		
@@ -130,7 +131,7 @@ public class Zeldaesque extends BasicGame
 
 	public void update(GameContainer container, int delta) throws SlickException 
 	{
-		if(y < -50)
+		if(y < -25)
 		{
 			inBossRoom = true;
 			currentRoom = 2;
