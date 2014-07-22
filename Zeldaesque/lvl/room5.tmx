@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="15" height="11" tilewidth="64" tileheight="64">
- <tileset firstgid="1" name="moreGrass" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="more grass" tilewidth="64" tileheight="64">
   <image source="../res/grassTiles.png" width="704" height="448"/>
   <tile id="1">
    <properties>
@@ -10,7 +10,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="15" height="11">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NiYGBgogAzkoGR9ZJqFzqbmQhMC73E+hNdLyVhNVL0AgBFqdLAlAIAAA==
+   H4sIAAAAAAAAC2NiYGBgwoIZkTA2eWzqiMWDRS+IzYyE8ZlLiV5GKuslNg4GOpzJxQDXzDgplAIAAA==
   </data>
  </layer>
 </map>

@@ -87,14 +87,14 @@ public class Zeldaesque extends BasicGame
 		switch (roomNumber)
 		{
 		case 1 :
-			return "room1";
+			return "room5";
 		case 2 : 
 			return "room4";
 			//System.out.println("It should be room 2!");
 		case 3 : 
-			return "room3";
+			return "room5";
 		default:
-			return "room3";
+			return "room5";
 		}
 	}
 	
@@ -145,6 +145,7 @@ public class Zeldaesque extends BasicGame
 			inBossRoom = true;
 			currentRoom = 2;
 			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
+			y = 600;
 		}
 		
 		Input input = container.getInput();
@@ -192,7 +193,7 @@ public class Zeldaesque extends BasicGame
 		try
 		{
 			appgc = new AppGameContainer(new Zeldaesque(gameName));
-			appgc.setDisplayMode(1000, 800, false);
+			appgc.setDisplayMode(960, 704, false);
 			appgc.start();
 		}
 		catch (SlickException e)
