@@ -16,6 +16,9 @@ public class Zeldaesque extends BasicGame
 	private float x = 64f;
 	private float y = 64f;
 	
+	private int health, maxHealth, healthBarX, healthBarY, healthBarWidth, healthBarHeight, healthScale;
+	
+	public Color healthBarColor;
 	private boolean inBossRoom = false;
 
 	private float bossX = 250;
@@ -60,8 +63,14 @@ public class Zeldaesque extends BasicGame
 					direction = 1;
 				break;
 			}
-		}
+		} 
 		
+	}
+	
+	public void drawHealthBar(Graphics g) {
+		float healthScale = health/maxHealth;
+		g.setColor(healthBarColor);
+		g.fillRect(healthBarX, healthBarY, healthBarWidth * healthScale, healthBarHeight);
 	}
 	
 	private boolean isBlocked(float x, float y)
@@ -80,7 +89,7 @@ public class Zeldaesque extends BasicGame
 		case 1 :
 			return "room1";
 		case 2 : 
-			return "room2";
+			return "room4";
 			//System.out.println("It should be room 2!");
 		case 3 : 
 			return "room3";
@@ -183,7 +192,7 @@ public class Zeldaesque extends BasicGame
 		try
 		{
 			appgc = new AppGameContainer(new Zeldaesque(gameName));
-			appgc.setDisplayMode(11*64, 7*64, false);
+			appgc.setDisplayMode(1000, 800, false);
 			appgc.start();
 		}
 		catch (SlickException e)
