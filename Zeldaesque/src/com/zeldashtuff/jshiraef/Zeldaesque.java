@@ -42,7 +42,7 @@ public class Zeldaesque extends BasicGame
 		
 		if(player.inBossRoom)
 		{
-			dungeon.initDungeon();
+			dungeon.loadRoom();
 			boss.render();
 		} 
 		
