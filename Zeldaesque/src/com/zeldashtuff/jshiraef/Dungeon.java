@@ -22,20 +22,8 @@ public class Dungeon {
 			System.out.println("error loading level");
 		}
 		
-		 blocked = new boolean[room.getWidth()][room.getHeight()];
+		loadRoom();
 		
-		for (int xAxis=0;xAxis<room.getWidth(); xAxis++)
-        {
-             for (int yAxis=0;yAxis<room.getHeight(); yAxis++)
-             {
-                 int tileID = room.getTileId(xAxis, yAxis, 0);
-                 String value = room.getTileProperty(tileID, "stone", "false");
-                 if ("true".equals(value))
-                 {
-                     blocked[xAxis][yAxis] = true;
-                 }
-             }
-         }
 	}
 	
 	
@@ -74,6 +62,23 @@ public class Dungeon {
 		default:
 			return "room5";
 		}
+	}
+	
+	public void loadRoom() {
+		 blocked = new boolean[room.getWidth()][room.getHeight()];
+			
+			for (int xAxis=0;xAxis<room.getWidth(); xAxis++)
+	        {
+	             for (int yAxis=0;yAxis<room.getHeight(); yAxis++)
+	             {
+	                 int tileID = room.getTileId(xAxis, yAxis, 0);
+	                 String value = room.getTileProperty(tileID, "stone", "false");
+	                 if ("true".equals(value))
+	                 {
+	                     blocked[xAxis][yAxis] = true;
+	                 }
+	             }
+	         }
 	}
 	
 	

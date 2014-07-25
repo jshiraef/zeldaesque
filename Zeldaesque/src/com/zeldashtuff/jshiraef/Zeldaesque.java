@@ -19,14 +19,7 @@ public class Zeldaesque extends BasicGame
 	private static final int SIZE = 64;
 	
 	
-	private int health, maxHealth, healthBarX, healthBarY, healthBarWidth, healthBarHeight, healthScale;
-	
-	public Color healthBarColor;
-	
 
-	
-	
-	
 	
 	
 	
@@ -49,16 +42,13 @@ public class Zeldaesque extends BasicGame
 		
 		if(player.inBossRoom)
 		{
+			dungeon.initDungeon();
 			boss.render();
 		} 
 		
 	}
 	
-	public void drawHealthBar(Graphics g) {
-		float healthScale = health/maxHealth;
-		g.setColor(healthBarColor);
-		g.fillRect(healthBarX, healthBarY, healthBarWidth * healthScale, healthBarHeight);
-	}
+
 	
 
 	

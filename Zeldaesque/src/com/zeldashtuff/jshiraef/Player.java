@@ -1,6 +1,7 @@
 package com.zeldashtuff.jshiraef;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -17,6 +18,12 @@ public class Player {
 	public boolean inBossRoom = false;
 	
 	public Dungeon dungeon;
+	
+	private int health = 5;
+	private int maxHealth = 10;
+	private int healthBarX = 100, healthBarY = 120, healthBarWidth = 32, healthBarHeight = 32, healthScale = 64;
+	
+	public Color healthBarColor;
 	
 	
 	public Player (Dungeon dungeon) throws SlickException{
@@ -39,10 +46,13 @@ public class Player {
 		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 100);
 		
 		sprite.draw(x, y);
+		drawHealthBar(g);
 		
 	}
 	
 	public void update(Input input, int delta) throws SlickException {
+		
+		
 
 		if(y < -25)
 		{
@@ -91,6 +101,11 @@ public class Player {
              }
 		}
 		
+	}
+	public void drawHealthBar(Graphics g) {
+		float healthScale = health/maxHealth;
+		g.setColor(healthBarColor);
+		g.fillRect(healthBarX, healthBarY, healthBarWidth * healthScale, healthBarHeight);
 	}
 	
 	
