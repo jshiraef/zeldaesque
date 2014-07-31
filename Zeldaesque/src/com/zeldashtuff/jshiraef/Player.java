@@ -101,6 +101,10 @@ public class Player {
              }
 		}
 		
+		if(x/dungeon.room.getTileWidth() == Boss.bossX/dungeon.room.getTileWidth() || y/dungeon.room.getTileWidth() == Boss.bossY/dungeon.room.getTileWidth()) {
+			System.out.println("hit damage");
+		}
+		
 	}
 	public void drawHealthBar(Graphics g) {
 		float healthScale = health/maxHealth;

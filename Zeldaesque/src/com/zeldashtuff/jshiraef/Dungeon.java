@@ -17,7 +17,7 @@ public class Dungeon {
 		{
 			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
 		}
-		catch (SlickException e)
+		catch (SlickException e) 
 		{
 			System.out.println("error loading level");
 		}

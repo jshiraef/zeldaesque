@@ -1,6 +1,7 @@
 package com.zeldashtuff.jshiraef;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -9,8 +10,8 @@ public class Boss {
 	Animation boss, pacing;
 	
 
-	private float bossX = 250;
-	private float bossY = 250;
+	public static float bossX = 250;
+	public static float bossY = 250;
 	
 	private int direction = 1;
 	
@@ -24,7 +25,9 @@ public class Boss {
 		boss = pacing;
 	}
 	
-	public void render() {
+	public void render(Graphics g) {
+		
+		g.drawString(" Boss's X: " + bossX +  "\n Boss's Y: " + bossY, 700, 100);
 
 
 		boss.draw(bossX, bossY);
