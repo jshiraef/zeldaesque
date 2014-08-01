@@ -9,25 +9,36 @@ public class Boss {
 
 	Animation boss, pacing;
 	
+	public Dungeon dungeon;
 
 	public static float bossX = 250;
 	public static float bossY = 250;
+	
+	public static int bossTileX;
+	public static int bossTileY;
+	
+	
+
 	
 	private int direction = 1;
 	
 	int[] bossDuration = {300, 300, 300};
 	
 	
-	public Boss() throws SlickException {
+	public Boss(Dungeon dungeon) throws SlickException {
 		
 		Image[] bossPacing = {new Image("res/girlBoss.png"), new Image("res/girlBoss2.png"), new Image("res/girlBoss3.png")};
 		pacing = new Animation(bossPacing, bossDuration, true);
 		boss = pacing;
+		
+		this.dungeon = dungeon;
 	}
 	
 	public void render(Graphics g) {
 		
-		g.drawString(" Boss's X: " + bossX +  "\n Boss's Y: " + bossY, 700, 100);
+		
+		
+		g.drawString(" Boss's X: " + bossTileX +  "\n Boss's Y: " + bossTileY, 700, 100);
 
 
 		boss.draw(bossX, bossY);
@@ -47,6 +58,13 @@ public class Boss {
 				direction = 1;
 			break;
 		}
+	}
+	
+	public void update(int delta) {
+		
+		 bossTileX = Math.round(bossX)/dungeon.room.getTileWidth();
+		 bossTileY = Math.round(bossY)/dungeon.room.getTileHeight();
+		
 	}
 	
 }

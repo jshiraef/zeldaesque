@@ -6,7 +6,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Dungeon {
 	
-	public TiledMap room;
+	public static TiledMap room;
 	public int currentRoom = 0;
 	
 	private boolean[][] blocked;
@@ -48,7 +48,7 @@ public class Dungeon {
 	
 	public static String switchRoom(int roomNumber)
 	{
-		String roomName = "";
+		
 		
 		switch (roomNumber)
 		{

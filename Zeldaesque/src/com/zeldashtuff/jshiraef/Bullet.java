@@ -4,6 +4,9 @@ import org.newdawn.slick.Animation;
 
 public class Bullet {
 	
+	
+	
+	
 	Animation projectile, trajectory;
 	
 	public Bullet() {

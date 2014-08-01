@@ -72,7 +72,7 @@ public class Zeldaesque extends BasicGame
 		
 		
 		
-		boss = new Boss();
+		boss = new Boss(dungeon);
 		dungeon = new Dungeon();
 		player = new Player(dungeon);
 		
@@ -86,6 +86,10 @@ public class Zeldaesque extends BasicGame
 
 	public void update(GameContainer container, int delta) throws SlickException 
 	{
+		if(player.inBossRoom)
+		{
+			boss.update(delta);
+		} 
 		
 		player.update(container.getInput(), delta);
 		
