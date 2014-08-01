@@ -12,7 +12,7 @@ public class Boss {
 	public Dungeon dungeon;
 
 	public static float bossX = 250;
-	public static float bossY = 250;
+	public static float bossY = 450;
 	
 	public static int bossTileX;
 	public static int bossTileY;
@@ -39,6 +39,7 @@ public class Boss {
 		
 		
 		g.drawString(" Boss's X: " + bossTileX +  "\n Boss's Y: " + bossTileY, 700, 100);
+		g.drawString(" Boss's X: " + bossX +  "\n Boss's Y: " + bossY, 700, 400);
 
 
 		boss.draw(bossX, bossY);

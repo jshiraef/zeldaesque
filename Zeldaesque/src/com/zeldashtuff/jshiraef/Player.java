@@ -58,6 +58,7 @@ public class Player {
 	
 	
 		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
+		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 400);
 		
 		sprite.draw(x, y);
 		
@@ -124,6 +125,29 @@ public class Player {
 		
 		if(Boss.bossTileX == playerTileX && Boss.bossTileY == playerTileY) {
 			System.out.println("hit damage");
+			
+			Zeldaesque.maxHealth += .01;
+
+				if(input.isKeyDown(Input.KEY_RIGHT)) {
+					sprite.update(delta);
+	                x -= delta * 0.5f;
+				}
+
+				if(input.isKeyDown(Input.KEY_LEFT)) {
+					sprite.update(delta);
+	                x += delta * 0.5f;
+				}
+
+				if(input.isKeyDown(Input.KEY_DOWN)) {
+					sprite.update(delta);
+	                y -= delta * 0.5f;
+				}
+
+				if(input.isKeyDown(Input.KEY_UP)) {
+					sprite.update(delta);
+	                y += delta * 0.5f;
+				}
+			
 		}
 		
 		

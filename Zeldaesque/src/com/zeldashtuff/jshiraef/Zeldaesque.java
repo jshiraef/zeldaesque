@@ -19,7 +19,7 @@ public class Zeldaesque extends BasicGame
 	private static final int SIZE = 64;
 	
 	
-	private float health = 1, maxHealth = 3, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
+	public static float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
 	
 	public Color healthBarColor = Color.red;
 	
