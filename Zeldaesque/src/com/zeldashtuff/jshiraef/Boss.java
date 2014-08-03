@@ -9,13 +9,22 @@ public class Boss {
 
 	Animation boss, pacing;
 	
+	Image bossPic1 = new Image("res/girlBoss.png");
+	Image bossPic2 = new Image("res/girlBoss2.png");
+	Image bossPic3 = new Image("res/girlBoss3.png");
+	
 	public Dungeon dungeon;
 
 	public static float bossX = 250;
-	public static float bossY = 450;
+	public static float bossY = 500;
 	
-	public static int bossTileX;
-	public static int bossTileY;
+	public static float bossCenterX;
+	public static float bossCenterY;
+	
+	
+	
+//	public static int bossTileX;
+//	public static int bossTileY;
 	
 	
 
@@ -27,7 +36,7 @@ public class Boss {
 	
 	public Boss(Dungeon dungeon) throws SlickException {
 		
-		Image[] bossPacing = {new Image("res/girlBoss.png"), new Image("res/girlBoss2.png"), new Image("res/girlBoss3.png")};
+		Image[] bossPacing = {bossPic1, bossPic2, bossPic3};
 		pacing = new Animation(bossPacing, bossDuration, true);
 		boss = pacing;
 		
@@ -37,8 +46,11 @@ public class Boss {
 	public void render(Graphics g) {
 		
 		
+		bossCenterX = bossX + bossPic1.getHeight()/2;
+		bossCenterY = bossY + bossPic2.getWidth()/2;
 		
-		g.drawString(" Boss's X: " + bossTileX +  "\n Boss's Y: " + bossTileY, 700, 100);
+		
+//		g.drawString(" Boss's X: " + bossTileX +  "\n Boss's Y: " + bossTileY, 700, 100);
 		g.drawString(" Boss's X: " + bossX +  "\n Boss's Y: " + bossY, 700, 400);
 
 
@@ -63,8 +75,8 @@ public class Boss {
 	
 	public void update(int delta) {
 		
-		 bossTileX = Math.round(bossX)/dungeon.room.getTileWidth();
-		 bossTileY = Math.round(bossY)/dungeon.room.getTileHeight();
+//		 bossTileX = Math.round(bossX)/dungeon.room.getTileWidth();
+//		 bossTileY = Math.round(bossY)/dungeon.room.getTileHeight();
 		
 	}
 	

@@ -1,5 +1,7 @@
 package com.zeldashtuff.jshiraef;
 
+
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -13,11 +15,17 @@ public class Player {
 	
 	Animation up, down, left, right, sprite ; //redundant variables?
 	
+	Image heroPic1 = new Image("res/linkWalking.png");
+	Image heroPic2 = new Image("res/linkWalking2.png");
+	
 	public float x = 64f;
 	public float y = 64f;
 	
 	int playerTileX;
 	int playerTileY;
+	
+	public static float playerCenterX;
+	public static float playerCenterY;
 	
 	public boolean inBossRoom = false;
 	
@@ -28,7 +36,7 @@ public class Player {
 	private int health = 5;
 	private int maxHealth = 10;
 	
-	
+	Vector2f distanceToBoss = new Vector2f (Boss.bossX - x, Boss.bossY - y);
 
 	
 	
@@ -55,10 +63,14 @@ public class Player {
 	
 	public void render(Graphics g) {
 		
+		playerCenterX = x + heroPic1.getHeight()/2;
+		playerCenterY = y + heroPic2.getWidth()/2;
 	
 	
-		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
+//		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
 		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 400);
+		
+		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
 		
 		sprite.draw(x, y);
 		
@@ -120,32 +132,34 @@ public class Player {
              }
 		}
 		
-		playerTileX = Math.round(x)/dungeon.room.getTileWidth();
-		playerTileY = Math.round(y)/dungeon.room.getTileHeight();
+//		playerTileX = Math.round(x)/dungeon.room.getTileWidth();
+//		playerTileY = Math.round(y)/dungeon.room.getTileHeight();
 		
-		if(Boss.bossTileX == playerTileX && Boss.bossTileY == playerTileY) {
+		distanceToBoss = new Vector2f (Boss.bossCenterX - playerCenterX, Boss.bossCenterY - playerCenterY);
+		
+		if((distanceToBoss.x < 40 && distanceToBoss.x > - 40) && (distanceToBoss.y < 60 && distanceToBoss.y > -60)) {
 			System.out.println("hit damage");
 			
-			Zeldaesque.maxHealth += .01;
+			Zeldaesque.maxHealth += .5;
 
-				if(input.isKeyDown(Input.KEY_RIGHT)) {
+				if(distanceToBoss.x > 35) {
 					sprite.update(delta);
-	                x -= delta * 0.5f;
+	                x -= delta * 35f;
 				}
 
-				if(input.isKeyDown(Input.KEY_LEFT)) {
+				if(distanceToBoss.x < -35) {
 					sprite.update(delta);
-	                x += delta * 0.5f;
+					x += delta * 35f;
 				}
 
-				if(input.isKeyDown(Input.KEY_DOWN)) {
+				if(distanceToBoss.y > 55) {
 					sprite.update(delta);
-	                y -= delta * 0.5f;
+					y -= delta * 35f;
 				}
 
-				if(input.isKeyDown(Input.KEY_UP)) {
+				if(distanceToBoss.y < -55) {
 					sprite.update(delta);
-	                y += delta * 0.5f;
+					y += delta * 35f;
 				}
 			
 		}

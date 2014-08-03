@@ -60,6 +60,8 @@ public class Zeldaesque extends BasicGame
 		g.fillRect(healthBarX, healthBarY, healthBarWidth * healthScale, healthBarHeight);
 		g.drawString("Link's HP", healthBarX, healthBarY - 20);
 	}
+	
+	
 
 	
 	@Override
