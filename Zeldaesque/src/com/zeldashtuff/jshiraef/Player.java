@@ -18,6 +18,8 @@ public class Player {
 	Image heroPic1 = new Image("res/linkWalking.png");
 	Image heroPic2 = new Image("res/linkWalking2.png");
 	
+	Image gameOver = new Image("res/GameOver.png");
+	
 	public float x = 64f;
 	public float y = 64f;
 	
@@ -74,7 +76,10 @@ public class Player {
 		
 		sprite.draw(x, y);
 		
-		
+		if(Zeldaesque.maxHealth > 3) {
+			gameOver.drawCentered(960/2, 704/2);
+			System.out.println("It should be showing");
+		}
 
 		
 	}
@@ -161,7 +166,7 @@ public class Player {
 					sprite.update(delta);
 					y += delta * 35f;
 				}
-			
+			System.out.println("Health: " + Zeldaesque.maxHealth);
 		}
 		
 		
