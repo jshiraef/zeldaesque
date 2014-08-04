@@ -17,6 +17,8 @@ public class Zeldaesque extends BasicGame
 	
 	
 	private static final int SIZE = 64;
+	public static final int screenWidth = 960;
+	public static final int screenHeight = 704;
 	
 	
 	public static float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
@@ -102,7 +104,7 @@ public class Zeldaesque extends BasicGame
 		try
 		{
 			appgc = new AppGameContainer(new Zeldaesque(gameName));
-			appgc.setDisplayMode(960, 704, false);
+			appgc.setDisplayMode(screenWidth, screenHeight, false);
 			appgc.start();
 		}
 		catch (SlickException e)

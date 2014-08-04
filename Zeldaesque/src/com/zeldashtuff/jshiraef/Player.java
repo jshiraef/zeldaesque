@@ -20,8 +20,8 @@ public class Player {
 	
 	Image gameOver = new Image("res/GameOver.png");
 	
-	public float playerX = 64f;
-	public float playerY = 64f;
+	public static float playerX = 64f;
+	public static float playerY = 64f;
 	
 	int playerTileX;
 	int playerTileY;
@@ -33,14 +33,14 @@ public class Player {
 	
 	public Dungeon dungeon;
 	
-	public Vector2f position;
+	public static Vector2f position;
 	
 	private int health = 5;
 	private int maxHealth = 10;
 	
 	private float speed = .15f;
 	
-	Vector2f distanceToBoss = new Vector2f (Boss.bossX - playerX, Boss.bossY - playerY);
+	public static Vector2f distanceToBoss = new Vector2f (Boss.bossX - playerX, Boss.bossY - playerY);
 
 	
 	
@@ -67,6 +67,10 @@ public class Player {
 	
 	public void render(Graphics g) {
 		
+		if (Zeldaesque.maxHealth > 3) {
+			playerDeath();
+		}
+		
 		playerCenterX = playerX + heroPic1.getHeight()/2;
 		playerCenterY = playerY + heroPic2.getWidth()/2;
 	
@@ -74,13 +78,11 @@ public class Player {
 //		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
 		g.drawString(" Link's X: " + playerX +  "\n Link's Y: " + playerY, 500, 400);
 		
-		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
+//		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
 		
 		sprite.draw(playerX, playerY);
 		
-		if (Zeldaesque.maxHealth > 3) {
-			playerDeath();
-		}
+		
 
 		
 	}
@@ -102,7 +104,6 @@ public class Player {
 		
 		
 		
-		
 //		speed *= delta; 	
 		
 		if (input.isKeyDown(Input.KEY_UP))
@@ -110,17 +111,24 @@ public class Player {
 			sprite = up;
 			if (!dungeon.isBlocked(playerX, playerY - delta * 0.1f))
 	          {
+				if(playerY < (0 - (heroPic1.getHeight()/2)))
+					playerY = 0 - (heroPic1.getHeight()/2);
+				else {
                 sprite.update(delta);
-                
                 playerY -= delta* speed;
+				}
             }
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
 			 if (!dungeon.isBlocked(playerX, playerY + sprite.getHeight() + delta * 0.1f))
              {
+				 if(playerY > (Zeldaesque.screenHeight - 74))
+						playerY = Zeldaesque.screenHeight - 74;
+					else {
                  sprite.update(delta);
                  playerY += delta* speed;
+					}
              }
 		}
 		 if (input.isKeyDown(Input.KEY_LEFT))
@@ -150,29 +158,33 @@ public class Player {
 		if((distanceToBoss.x < 40 && distanceToBoss.x > - 40) && (distanceToBoss.y < 60 && distanceToBoss.y > -60)) {
 			System.out.println("hit damage");
 			
+			Boss.direction = 1;
+			Boss.angry = true;
+			
 			Zeldaesque.maxHealth += .5;
 
 				if(distanceToBoss.x > 35) {
-					sprite.update(delta);
+//					sprite.update(delta);
 	                playerX -= delta * 28f;
 				}
 
 				if(distanceToBoss.x < -35) {
-					sprite.update(delta);
+//					sprite.update(delta);
 					playerX += delta * 28f;
 				}
 
 				if(distanceToBoss.y > 55) {
-					sprite.update(delta);
+//					sprite.update(delta);
 					playerY -= delta * 28f;
 				}
 
 				if(distanceToBoss.y < -55) {
-					sprite.update(delta);
+//					sprite.update(delta);
 					playerY += delta * 28f;
 				}
 			System.out.println("Health: " + Zeldaesque.maxHealth);
 		}
+		
 		
 	}
 	
