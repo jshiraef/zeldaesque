@@ -177,7 +177,7 @@ public class Player {
 	}
 	
 	public void playerDeath() {
-		gameOver.drawCentered(960/2, 704/2);
+		gameOver.drawFlash(960/4, 704/5);
 		
 	}
 	
