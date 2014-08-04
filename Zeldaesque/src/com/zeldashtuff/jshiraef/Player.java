@@ -20,8 +20,8 @@ public class Player {
 	
 	Image gameOver = new Image("res/GameOver.png");
 	
-	public float x = 64f;
-	public float y = 64f;
+	public float playerX = 64f;
+	public float playerY = 64f;
 	
 	int playerTileX;
 	int playerTileY;
@@ -38,7 +38,9 @@ public class Player {
 	private int health = 5;
 	private int maxHealth = 10;
 	
-	Vector2f distanceToBoss = new Vector2f (Boss.bossX - x, Boss.bossY - y);
+	private float speed = .15f;
+	
+	Vector2f distanceToBoss = new Vector2f (Boss.bossX - playerX, Boss.bossY - playerY);
 
 	
 	
@@ -65,20 +67,19 @@ public class Player {
 	
 	public void render(Graphics g) {
 		
-		playerCenterX = x + heroPic1.getHeight()/2;
-		playerCenterY = y + heroPic2.getWidth()/2;
+		playerCenterX = playerX + heroPic1.getHeight()/2;
+		playerCenterY = playerY + heroPic2.getWidth()/2;
 	
 	
 //		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
-		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 400);
+		g.drawString(" Link's X: " + playerX +  "\n Link's Y: " + playerY, 500, 400);
 		
 		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
 		
-		sprite.draw(x, y);
+		sprite.draw(playerX, playerY);
 		
-		if(Zeldaesque.maxHealth > 3) {
-			gameOver.drawCentered(960/2, 704/2);
-			System.out.println("It should be showing");
+		if (Zeldaesque.maxHealth > 3) {
+			playerDeath();
 		}
 
 		
@@ -89,51 +90,55 @@ public class Player {
 		
 		
 
-		if(y < -25)
+		if(playerY < -25)
 		{
 			
 			inBossRoom = true;
 			dungeon.currentRoom = 2;
 			dungeon.room = new TiledMap("lvl/" + dungeon.switchRoom(dungeon.currentRoom) + ".tmx");
-			y = 600;
+			playerY = 600;
 		}
 		
 		
+		
+		
+		
+//		speed *= delta; 	
 		
 		if (input.isKeyDown(Input.KEY_UP))
 		{
 			sprite = up;
-			if (!dungeon.isBlocked(x, y - delta * 0.1f))
+			if (!dungeon.isBlocked(playerX, playerY - delta * 0.1f))
 	          {
                 sprite.update(delta);
                 
-                y -= delta * 0.1f;
+                playerY -= delta* speed;
             }
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
-			 if (!dungeon.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
+			 if (!dungeon.isBlocked(playerX, playerY + sprite.getHeight() + delta * 0.1f))
              {
                  sprite.update(delta);
-                 y += delta * 0.1f;
+                 playerY += delta* speed;
              }
 		}
-		else if (input.isKeyDown(Input.KEY_LEFT))
+		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
 			sprite = up;
-			if (!dungeon.isBlocked(x - delta * 0.1f, y))
+			if (!dungeon.isBlocked(playerX - delta * 0.1f, playerY))
             {
                 sprite.update(delta);
-                x -= delta * 0.1f;
+                playerX -= delta* speed;
             }
 		}
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
 			sprite = up;
-			 if (!dungeon.isBlocked(x + sprite.getWidth() + delta * 0.1f, y))
+			 if (!dungeon.isBlocked(playerX + sprite.getWidth() + delta * 0.1f, playerY))
              {
                  sprite.update(delta);
-                 x += delta * 0.1f;
+                 playerX += delta* speed;
              }
 		}
 		
@@ -149,30 +154,32 @@ public class Player {
 
 				if(distanceToBoss.x > 35) {
 					sprite.update(delta);
-	                x -= delta * 35f;
+	                playerX -= delta * 28f;
 				}
 
 				if(distanceToBoss.x < -35) {
 					sprite.update(delta);
-					x += delta * 35f;
+					playerX += delta * 28f;
 				}
 
 				if(distanceToBoss.y > 55) {
 					sprite.update(delta);
-					y -= delta * 35f;
+					playerY -= delta * 28f;
 				}
 
 				if(distanceToBoss.y < -55) {
 					sprite.update(delta);
-					y += delta * 35f;
+					playerY += delta * 28f;
 				}
 			System.out.println("Health: " + Zeldaesque.maxHealth);
 		}
 		
-		
-		
 	}
 	
+	public void playerDeath() {
+		gameOver.drawCentered(960/2, 704/2);
+		
+	}
 	
 	
 //	public Vector2f CollisionCheck(float x, float y) {
@@ -193,6 +200,29 @@ public class Player {
 //		return null;
 //	}
 	
+//public static void collisionBounce(float distanceX, float distanceY, float spriteX, float spriteY, Animation sprite, int delta) {
+//		
+//		if(distanceX > 35) {
+//			sprite.update(delta);
+//            spriteX -= delta * 35f;
+//		}
+//
+//		else if(distanceX < -35) {
+//			sprite.update(delta);
+//			spriteX += delta * 35f;
+//		}
+//
+//		else if(distanceY > 55) {
+//			sprite.update(delta);
+//			spriteY -= delta * 35f;
+//		}
+//
+//		else if(distanceY < -55) {
+//			sprite.update(delta);
+//			spriteY += delta * 35f;
+//		}
+//		
+//	}
 	
 
 }
