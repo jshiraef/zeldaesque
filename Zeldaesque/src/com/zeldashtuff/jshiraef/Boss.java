@@ -109,9 +109,7 @@ public class Boss {
 			System.out.println("Watch out");
 			break;
 				
-		case 2: 
-			System.out.println("Case 2");
-		
+		case 2:
 				
 			if (bossX < 350)
 				bossX += .1;
@@ -120,14 +118,11 @@ public class Boss {
 			
 			break;
 		case 3:
-			
-		
-			
+
 				if (bossX > 200)
 					bossX -= .1;
 				else
 					direction = 2;
-				
 			
 			break;
 			

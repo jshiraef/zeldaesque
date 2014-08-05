@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.*;
 import org.lwjgl.*;
 
+
+
 public class Zeldaesque extends BasicGame
 {
 	public static final String gameName = "Zelder Clone";
@@ -14,6 +16,7 @@ public class Zeldaesque extends BasicGame
 	public Boss boss;
 	public Player player;
 	public Dungeon dungeon;
+	
 	
 	
 	private static final int SIZE = 64;
@@ -42,6 +45,7 @@ public class Zeldaesque extends BasicGame
 		
 		dungeon.render(g);
 		player.render(g);
+		
 		drawHealthBar(g);
 		
 		
@@ -86,6 +90,7 @@ public class Zeldaesque extends BasicGame
 		
 		
 		
+		
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException 
@@ -97,9 +102,10 @@ public class Zeldaesque extends BasicGame
 		
 		player.update(container.getInput(), delta);
 		
+		
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws SlickException
 	{
 		try
 		{

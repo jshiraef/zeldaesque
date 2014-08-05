@@ -11,12 +11,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
+
 public class Player {
 	
-	Animation up, down, left, right ; //redundant variables?
+	
 
-	static Animation sprite;
-	static Animation hit;
+	static Animation sprite, up, down, left, right, hit; //redundant variables?
+
+
 	
 	Image heroPic1 = new Image("res/linkWalking.png");
 	Image heroPic2 = new Image("res/linkWalking2.png");
@@ -37,6 +39,7 @@ public class Player {
 	public boolean inBossRoom = false;
 	
 	public Dungeon dungeon;
+	public ProjectileController pc;
 	
 	public static Vector2f position;
 	
@@ -197,6 +200,11 @@ public class Player {
 					playerY += delta * 28f;
 				}
 			System.out.println("Health: " + Zeldaesque.maxHealth);
+		}
+		
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+//			Arrow.loaded = true;
+			pc.addArrow(new Arrow(playerX, playerY, this));
 		}
 		
 		
