@@ -75,7 +75,7 @@ public class Boss {
 	
 	public void update(int delta) {
 		
-
+		
 		
 		Vector2f distanceToPlayer = new Vector2f(bossCenterX - dungeon.player.playerCenterX, bossCenterY - dungeon.player.playerCenterY);
 		
@@ -87,7 +87,6 @@ public class Boss {
 		{
 		case 1:
 			if (angry) {
-				
 				
 				
 				if(distanceToPlayer.x < 0)

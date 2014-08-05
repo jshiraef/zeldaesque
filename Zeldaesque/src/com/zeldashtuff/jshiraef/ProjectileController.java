@@ -10,7 +10,7 @@ public class ProjectileController {
 	
 private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
 	
-	Arrow TempArrow;
+	 static Arrow TempArrow;
 	
 	Zeldaesque game;
 	
@@ -42,6 +42,10 @@ private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
 	
 	public void removeArrow(Arrow block) {
 		quiver.remove(block);
+	}
+	
+	public int getQuiverSize(){
+		return quiver.size();
 	}
 
 }

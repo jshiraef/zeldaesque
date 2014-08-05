@@ -14,8 +14,8 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Arrow {
 	
-	private double x = 100;
-	private double y = 100;
+	private float x = 100;
+	private float y = 100;
 	
 	Animation projectile;
 	
@@ -26,7 +26,7 @@ public class Arrow {
 	Image arrow = arrows.getSubImage(1, 1, 32, 32);
 	
 	
-	public Arrow(double x, double y, Player player) throws SlickException {
+	public Arrow(float x, float y, Player player) throws SlickException {
 		
 		this.x = x;
 		this.y = y;
@@ -55,11 +55,11 @@ public class Arrow {
 		
 	}
 	
-	public double getX() {
+	public float getX() {
 		return x;
 	}
 	
-	public double getY() {
+	public float getY() {
 		return y;
 	}
 }

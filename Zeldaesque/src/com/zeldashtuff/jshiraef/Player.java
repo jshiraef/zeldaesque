@@ -165,6 +165,20 @@ public class Player {
 		
 //		playerTileX = Math.round(x)/dungeon.room.getTileWidth();
 //		playerTileY = Math.round(y)/dungeon.room.getTileHeight();
+		 
+		 
+		 
+		 for(int i = 0; i < pc.getQuiverSize(); i++	) {
+			 
+			 Vector2f distanceToArrow = new Vector2f(dungeon.boss.bossCenterX - ProjectileController.TempArrow.getX(), dungeon.boss.bossCenterY - ProjectileController.TempArrow.getY());
+//			 System.out.println("distance to arrow" + distanceToArrow);
+			 
+			 if ((distanceToArrow.x < 40 && distanceToArrow.x > -40) && (distanceToArrow.y < 60 && distanceToArrow.y > -60))
+				 System.out.println("a HIT!!");
+				 Boss.bossMaxHealth += .00001;
+		 }
+		 
+		 
 		
 		Vector2f distanceToBoss = new Vector2f (dungeon.boss.bossCenterX - playerCenterX, dungeon.boss.bossCenterY - playerCenterY);
 		
@@ -203,7 +217,9 @@ public class Player {
 		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
-//			Arrow.loaded = true;
+			Arrow.loaded = true;
+			
+			
 			pc.addArrow(new Arrow(x, y, this));
 		}
 		
