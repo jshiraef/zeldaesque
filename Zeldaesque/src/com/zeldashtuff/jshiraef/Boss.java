@@ -16,6 +16,8 @@ public class Boss {
 	Image bossPic3 = new Image("res/girlBoss3.png");
 	
 	public Dungeon dungeon;
+	
+	public boolean hit = false;
 
 	public float x = 250;
 	public float y = 375;
@@ -29,7 +31,7 @@ public class Boss {
 	
 	public static boolean angry = false;
 	
-	public static float bossHealth = 1, bossMaxHealth = (float) 1.5, bossHealthBarX = 100, bossHealthBarY = 100, bossHealthBarWidth = 200, bossHealthBarHeight = 10;
+	public float bossHealth = 1, bossMaxHealth = (float) 1.5, bossHealthBarX = 100, bossHealthBarY = 100, bossHealthBarWidth = 200, bossHealthBarHeight = 10;
 	
 	
 	
@@ -66,8 +68,11 @@ public class Boss {
 //		
 //		g.drawString("distance to Player: " + distanceToPlayer, 300, 600);
 
-
+		//if(!hit)
 		boss.draw(x, y);
+		
+		
+		
 		drawBossHealthBar(g);
 		
 		
@@ -98,7 +103,7 @@ public class Boss {
 				else if (distanceToPlayer.y > 0)
 					y -= .07;
 				
-				Player.sprite = Player.hit;
+//				Player.sprite = Player.hit;
 			}
 			
 			else direction = 2;

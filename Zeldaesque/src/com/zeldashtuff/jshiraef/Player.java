@@ -174,10 +174,17 @@ public class Player {
 //			 System.out.println("distance to arrow" + distanceToArrow);
 			 
 			 if ((distanceToArrow.x < 40 && distanceToArrow.x > -40) && (distanceToArrow.y < 60 && distanceToArrow.y > -60))
+			 {
 				 System.out.println("a HIT!!");
-				 Boss.bossMaxHealth += .00001;
+			 
+			 	dungeon.boss.hit = true;
+			 	
+				 dungeon.boss.bossMaxHealth += .00001;
+			 }
+			 else dungeon.boss.hit = true;
+		 		
 		 }
-		 
+		
 		 
 		
 		Vector2f distanceToBoss = new Vector2f (dungeon.boss.bossCenterX - playerCenterX, dungeon.boss.bossCenterY - playerCenterY);
@@ -217,10 +224,10 @@ public class Player {
 		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
-			Arrow.loaded = true;
+//			Arrow.loaded = true;
 			
 			
-			pc.addArrow(new Arrow(x, y, this));
+			pc.addArrow(new Arrow(x, y, this, Direction.NORTH));
 		}
 		
 		

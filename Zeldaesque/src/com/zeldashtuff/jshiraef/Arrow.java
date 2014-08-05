@@ -16,36 +16,29 @@ public class Arrow {
 	
 	private float x = 100;
 	private float y = 100;
+	private Direction direction;
 	
 	Animation projectile;
 	
-	public static boolean loaded = false;
+	public boolean loaded = false;
 
-	Image arrows = new Image("res/brownTile.png");
+	Image arrows = new Image("res/arrowSpriteSheet.png");
 	
-	Image arrow = arrows.getSubImage(1, 1, 32, 32);
+	Image arrow = arrows.getSubImage(1, 1, 30, 30);
 	
 	
-	public Arrow(float x, float y, Player player) throws SlickException {
+	public Arrow(float x, float y, Player player, Direction direction) throws SlickException {
 		
 		this.x = x;
 		this.y = y;
+		this.direction = direction;
 		
 	}
 	
 	public void update() {
 		
-		if(Player.sprite == Player.up)
+		
 			y -= 1;
-		
-		else if(Player.sprite == Player.down)
-			y += 1;
-		
-		else if(Player.sprite == Player.left)
-			x -= 1;
-		
-		else if(Player.sprite == Player.right)
-			x += 1;
 		
 	}
 	
