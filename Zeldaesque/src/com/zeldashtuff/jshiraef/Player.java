@@ -16,7 +16,6 @@ public class Player {
 	Animation up, down, left, right ; //redundant variables?
 
 	static Animation sprite;
-
 	static Animation hit;
 	
 	Image heroPic1 = new Image("res/linkWalking.png");
@@ -251,5 +250,20 @@ public class Player {
 //		
 //	}
 	
+	public float getPlayerX() {
+		return playerX;
+	}
+	
+	public float getPlayerY() {
+		return playerY;
+	}
+	
+	public void setPlayerX() {
+		this.playerX = playerX;
+	}
+	
+	public void setPlayerY() {
+		this.playerY = playerY;
+	}
 
 }

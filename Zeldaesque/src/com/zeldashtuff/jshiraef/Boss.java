@@ -145,4 +145,20 @@ public class Boss {
 		g.drawString("Boss's HP", bossX, bossY - 20);
 	}
 	
+	public float getBossX() {
+		return bossX;
+	}
+	
+	public float getBossY() {
+		return bossY;
+	}
+	
+	public void setBossX() {
+		this.bossX = bossX;
+	}
+	
+	public void setBossY() {
+		this.bossY = bossY;
+	}
+	
 }
