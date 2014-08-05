@@ -63,10 +63,10 @@ public class Boss {
 		
 		
 //		g.drawString(" Boss's X: " + bossTileX +  "\n Boss's Y: " + bossTileY, 700, 100);
-		g.drawString(" Boss's X: " + bossX +  "\n Boss's Y: " + bossY, 700, 400);
-		g.drawString("DISTANCE: " + actualSeparation, 700, 100);
-		
-		g.drawString("distance to Player: " + distanceToPlayer, 300, 600);
+//		g.drawString(" Boss's X: " + bossX +  "\n Boss's Y: " + bossY, 700, 400);
+//		g.drawString("DISTANCE: " + actualSeparation, 700, 100);
+//		
+//		g.drawString("distance to Player: " + distanceToPlayer, 300, 600);
 
 
 		boss.draw(bossX, bossY);
@@ -89,6 +89,9 @@ public class Boss {
 		{
 		case 1:
 			if (angry) {
+				
+				
+				
 				if(distanceToPlayer.x < 0)
 					bossX +=.07;
 				else if (distanceToPlayer.x > 0)
@@ -98,7 +101,7 @@ public class Boss {
 				else if (distanceToPlayer.y > 0)
 					bossY -= .07;
 				
-				
+				Player.sprite = Player.hit;
 			}
 			
 			else direction = 2;
@@ -130,8 +133,8 @@ public class Boss {
 			
 		}
 		
-		if(Player.distanceToBoss.x < 50)
-		angry = true;
+//		if(Player.distanceToBoss.x < 50)
+//		angry = true;
 		
 	}
 	

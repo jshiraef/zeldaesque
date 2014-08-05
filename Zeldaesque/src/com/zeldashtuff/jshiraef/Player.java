@@ -13,10 +13,16 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Player {
 	
-	Animation up, down, left, right, sprite ; //redundant variables?
+	Animation up, down, left, right ; //redundant variables?
+
+	static Animation sprite;
+
+	static Animation hit;
 	
 	Image heroPic1 = new Image("res/linkWalking.png");
 	Image heroPic2 = new Image("res/linkWalking2.png");
+	Image damagedHeroPic1 = new Image("res/damagedLinkWalking.png");
+	Image damagedHeroPic2 = new Image("res/damagedLinkWalking.png");
 	
 	Image gameOver = new Image("res/GameOver.png");
 	
@@ -52,13 +58,17 @@ public class Player {
 	public Player (Dungeon dungeon) throws SlickException{
 		
 		int[] duration = {300, 300};
+		int[] damageDuration = {150, 150, 150, 150};
+		
 		
 		this.dungeon = dungeon;
 		
-		Image[] movementUp ={new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
+		Image[] movementUp ={heroPic1, heroPic2};
 		Image[] movementDown = {new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
+		Image[] damaged = {damagedHeroPic1, heroPic1, damagedHeroPic2, heroPic2};
 		
 		up = new Animation(movementUp, duration, false);
+		hit = new Animation(damaged, damageDuration, false);
 		sprite = up; 
 		
 	}
@@ -76,7 +86,7 @@ public class Player {
 	
 	
 //		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
-		g.drawString(" Link's X: " + playerX +  "\n Link's Y: " + playerY, 500, 400);
+//		g.drawString(" Link's X: " + playerX +  "\n Link's Y: " + playerY, 500, 400);
 		
 //		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
 		
@@ -108,7 +118,7 @@ public class Player {
 		
 		if (input.isKeyDown(Input.KEY_UP))
 		{
-			sprite = up;
+			
 			if (!dungeon.isBlocked(playerX, playerY - delta * 0.1f))
 	          {
 				if(playerY < (0 - (heroPic1.getHeight()/2)))
@@ -123,9 +133,10 @@ public class Player {
 		{
 			 if (!dungeon.isBlocked(playerX, playerY + sprite.getHeight() + delta * 0.1f))
              {
-				 if(playerY > (Zeldaesque.screenHeight - 74))
-						playerY = Zeldaesque.screenHeight - 74;
+				 if(playerY > (Zeldaesque.screenHeight - 74)) //edge of screen collision detection
+						playerY = Zeldaesque.screenHeight - 74; //edge of screen collision detection
 					else {
+						
                  sprite.update(delta);
                  playerY += delta* speed;
 					}
@@ -133,7 +144,7 @@ public class Player {
 		}
 		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
-			sprite = up;
+			
 			if (!dungeon.isBlocked(playerX - delta * 0.1f, playerY))
             {
                 sprite.update(delta);
@@ -142,7 +153,7 @@ public class Player {
 		}
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
-			sprite = up;
+			
 			 if (!dungeon.isBlocked(playerX + sprite.getWidth() + delta * 0.1f, playerY))
              {
                  sprite.update(delta);
@@ -164,22 +175,26 @@ public class Player {
 			Zeldaesque.maxHealth += .5;
 
 				if(distanceToBoss.x > 35) {
-//					sprite.update(delta);
+					sprite = hit;
+					sprite.update(delta);
 	                playerX -= delta * 28f;
 				}
 
 				if(distanceToBoss.x < -35) {
-//					sprite.update(delta);
+					sprite = hit;
+					sprite.update(delta);
 					playerX += delta * 28f;
 				}
 
 				if(distanceToBoss.y > 55) {
-//					sprite.update(delta);
+					sprite = hit;
+					sprite.update(delta);
 					playerY -= delta * 28f;
 				}
 
 				if(distanceToBoss.y < -55) {
-//					sprite.update(delta);
+					sprite = hit;
+					sprite.update(delta);
 					playerY += delta * 28f;
 				}
 			System.out.println("Health: " + Zeldaesque.maxHealth);
