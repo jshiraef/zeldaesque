@@ -32,9 +32,7 @@ private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
 	
 	public void render (Graphics g) {
 		for (int i = 0; i < quiver.size(); i++) {
-			TempArrow = quiver.get(i);
-			
-			TempArrow.render(g);
+			quiver.get(i).render(g);
 		}
 	}
 	

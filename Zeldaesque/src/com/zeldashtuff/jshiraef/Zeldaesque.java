@@ -24,9 +24,7 @@ public class Zeldaesque extends BasicGame
 	public static final int screenHeight = 704;
 	
 	
-	public static float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
 	
-	public Color healthBarColor = Color.red;
 	
 
 	
@@ -57,18 +55,11 @@ public class Zeldaesque extends BasicGame
 	{
 		
 		dungeon.render(g);
-	
-		drawHealthBar(g);
 		
 	}
 	
 
-	public void drawHealthBar(Graphics g) {
-		float healthScale = health/maxHealth;
-		g.setColor(healthBarColor);
-		g.fillRect(healthBarX, healthBarY, healthBarWidth * healthScale, healthBarHeight);
-		g.drawString("Link's HP", healthBarX, healthBarY - 20);
-	}
+	
 	
 	
 

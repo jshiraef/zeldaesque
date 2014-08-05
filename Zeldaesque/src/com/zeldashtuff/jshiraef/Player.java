@@ -41,18 +41,13 @@ public class Player {
 	public Dungeon dungeon;
 	public ProjectileController pc;
 	
-	private int health = 5;
-	private int maxHealth = 10;
+	
 	
 	private float speed = .15f;
 	
+	public float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
 	
-
-	
-	
-	
-	
-	public Color healthBarColor;
+	public Color healthBarColor = Color.red;
 	
 	
 	public Player (Dungeon dungeon) throws SlickException{
@@ -81,9 +76,11 @@ public class Player {
 	
 	public void render(Graphics g) {
 		
-		if (Zeldaesque.maxHealth > 3) {
+		if (maxHealth > 3) {
 			playerDeath();
 		}
+		
+		drawHealthBar(g);
 		
 		playerCenterX = x + heroPic1.getHeight()/2;
 		playerCenterY = y + heroPic2.getWidth()/2;
@@ -177,7 +174,7 @@ public class Player {
 			Boss.direction = 1;
 			Boss.angry = true;
 			
-			Zeldaesque.maxHealth += .5;
+			maxHealth += .5;
 
 				if(distanceToBoss.x > 35) {
 					sprite = hit;
@@ -202,7 +199,7 @@ public class Player {
 					sprite.update(delta);
 					y += delta * 28f;
 				}
-			System.out.println("Health: " + Zeldaesque.maxHealth);
+			System.out.println("Health: " + maxHealth);
 		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
@@ -218,7 +215,12 @@ public class Player {
 		
 	}
 	
-	
+	public void drawHealthBar(Graphics g) {
+		float healthScale = health/maxHealth;
+		g.setColor(healthBarColor);
+		g.fillRect(healthBarX, healthBarY, healthBarWidth * healthScale, healthBarHeight);
+		g.drawString("Link's HP", healthBarX, healthBarY - 20);
+	}
 
 	
 	public float getX() {
