@@ -14,11 +14,8 @@ private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
 	
 	Zeldaesque game;
 	
-	public ProjectileController (Zeldaesque game) {
-		
-		this.game = game;
-		
-		
+	public ProjectileController () {
+	
 		
 	}
 	

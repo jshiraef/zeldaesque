@@ -37,25 +37,28 @@ public class Zeldaesque extends BasicGame
 		super(gameName);
 	}
 
+	public void init(GameContainer arg0) throws SlickException {
+	
+		
+		dungeon = new Dungeon();
+	
+		}
+	
+	public void update(GameContainer container, int delta) throws SlickException 
+		{
+		
+		dungeon.update(container, delta);
+	
+		}
+	
+	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException
 	{
 		
-		
-		
 		dungeon.render(g);
-		player.render(g);
-		
+	
 		drawHealthBar(g);
-		
-		
-		
-		
-		if(player.inBossRoom)
-		{
-			dungeon.loadRoom();
-			boss.render(g);
-		} 
 		
 	}
 	
@@ -70,40 +73,10 @@ public class Zeldaesque extends BasicGame
 	
 
 	
-	@Override
-	public void init(GameContainer arg0) throws SlickException {
-		
-		
-		
-		
-		
-		
-		
-		
-		boss = new Boss(dungeon);
-		dungeon = new Dungeon();
-		player = new Player(dungeon);
-		
-		
-		
-		
-		
-		
-		
-		
-	}
 
-	public void update(GameContainer container, int delta) throws SlickException 
-	{
-		if(player.inBossRoom)
-		{
-			boss.update(delta);
-		} 
-		
-		player.update(container.getInput(), delta);
-		
-		
-	}
+	
+
+	
 	
 	public static void main(String[] args) throws SlickException
 	{

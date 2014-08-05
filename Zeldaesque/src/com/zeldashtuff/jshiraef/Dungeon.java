@@ -1,5 +1,6 @@
 package com.zeldashtuff.jshiraef;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -9,10 +10,13 @@ public class Dungeon {
 	public static TiledMap room;
 	public int currentRoom = 0;
 	
+	public Player player;
+	public Boss boss;
+	
 	private boolean[][] blocked;
 	
 	
-	public Dungeon() {
+	public Dungeon() throws SlickException {
 		try
 		{
 			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
@@ -21,6 +25,10 @@ public class Dungeon {
 		{
 			System.out.println("error loading level");
 		}
+		
+		boss = new Boss(this);
+		player = new Player(this);
+		
 		
 		loadRoom();
 		
@@ -31,10 +39,24 @@ public class Dungeon {
 		
 		room.render(0, 0);
 		
+		if(player.inBossRoom)
+		{
+			loadRoom();
+			boss.render(g);
+		} 
+		
+		player.render(g);
+		
 	}
 	
-	public void update () {
+	public void update (GameContainer container, int delta) throws SlickException {
 		
+		if(player.inBossRoom)
+		{
+			boss.update(delta);
+		} 
+		
+		player.update(container.getInput(), delta);
 		
 		
 	}

@@ -17,15 +17,13 @@ public class Boss {
 	
 	public Dungeon dungeon;
 
-	public static float bossX = 250;
-	public static float bossY = 375;
+	public float x = 250;
+	public float y = 375;
 	
-	public static float bossCenterX;
-	public static float bossCenterY;
+	public float bossCenterX;
+	public float bossCenterY;
 	
 	public Color healthBarColor = Color.blue;
-	
-	private static Vector2f distanceToPlayer;
 	
 	private double actualSeparation;
 	
@@ -58,8 +56,8 @@ public class Boss {
 	public void render(Graphics g) {
 		
 		
-		bossCenterX = bossX + bossPic1.getHeight()/2;
-		bossCenterY = bossY + bossPic2.getWidth()/2;
+		bossCenterX = x + bossPic1.getHeight()/2;
+		bossCenterY = y + bossPic2.getWidth()/2;
 		
 		
 //		g.drawString(" Boss's X: " + bossTileX +  "\n Boss's Y: " + bossTileY, 700, 100);
@@ -69,7 +67,7 @@ public class Boss {
 //		g.drawString("distance to Player: " + distanceToPlayer, 300, 600);
 
 
-		boss.draw(bossX, bossY);
+		boss.draw(x, y);
 		drawBossHealthBar(g);
 		
 		
@@ -79,7 +77,7 @@ public class Boss {
 		
 
 		
-		distanceToPlayer = new Vector2f(bossCenterX - Player.playerCenterX, bossCenterY - Player.playerCenterY);
+		Vector2f distanceToPlayer = new Vector2f(bossCenterX - dungeon.player.playerCenterX, bossCenterY - dungeon.player.playerCenterY);
 		
 		actualSeparation = Math.sqrt(distanceToPlayer.x * distanceToPlayer.x + distanceToPlayer.y * distanceToPlayer.y);
 		
@@ -93,13 +91,13 @@ public class Boss {
 				
 				
 				if(distanceToPlayer.x < 0)
-					bossX +=.07;
+					x +=.07;
 				else if (distanceToPlayer.x > 0)
-					bossX -= .07;
+					x -= .07;
 				if(distanceToPlayer.y < 0)
-					bossY +=.07;
+					y +=.07;
 				else if (distanceToPlayer.y > 0)
-					bossY -= .07;
+					y -= .07;
 				
 				Player.sprite = Player.hit;
 			}
@@ -111,16 +109,16 @@ public class Boss {
 				
 		case 2:
 				
-			if (bossX < 350)
-				bossX += .1;
+			if (x < 350)
+				x += .1;
 			else
 				direction = 3;
 			
 			break;
 		case 3:
 
-				if (bossX > 200)
-					bossX -= .1;
+				if (x > 200)
+					x -= .1;
 				else
 					direction = 2;
 			
@@ -136,24 +134,24 @@ public class Boss {
 	public void drawBossHealthBar(Graphics g) {
 		float healthScale = bossHealth/bossMaxHealth;
 		g.setColor(healthBarColor);
-		g.fillRect(bossX, bossY, bossHealthBarWidth * healthScale, bossHealthBarHeight);
-		g.drawString("Boss's HP", bossX, bossY - 20);
+		g.fillRect(x, y, bossHealthBarWidth * healthScale, bossHealthBarHeight);
+		g.drawString("Boss's HP", x, y - 20);
 	}
 	
 	public float getBossX() {
-		return bossX;
+		return x;
 	}
 	
 	public float getBossY() {
-		return bossY;
+		return y;
 	}
 	
 	public void setBossX() {
-		this.bossX = bossX;
+		this.x = x;
 	}
 	
 	public void setBossY() {
-		this.bossY = bossY;
+		this.y = y;
 	}
 	
 }
