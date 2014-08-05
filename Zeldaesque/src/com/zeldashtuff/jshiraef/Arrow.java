@@ -38,13 +38,13 @@ public class Arrow {
 		if(Player.sprite == Player.up)
 			y -= 1;
 		
-		if(Player.sprite == Player.down)
+		else if(Player.sprite == Player.down)
 			y += 1;
 		
-		if(Player.sprite == Player.left)
+		else if(Player.sprite == Player.left)
 			x -= 1;
 		
-		if(Player.sprite == Player.up)
+		else if(Player.sprite == Player.right)
 			x += 1;
 		
 	}
