@@ -9,15 +9,26 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Boss {
 
-	Animation boss, pacing;
+	Animation boss, pacing, kaboom;
 	
 	Image bossPic1 = new Image("res/girlBoss.png");
 	Image bossPic2 = new Image("res/girlBoss2.png");
 	Image bossPic3 = new Image("res/girlBoss3.png");
 	
+	Image explosions = new Image("res/explodingSheet.png");
+	
+	Image explodePic1 = explosions.getSubImage(1, 1, 64, 64);
+	Image explodePic2 = explosions.getSubImage(64, 64, 64, 64);
+	Image explodePic3 = explosions.getSubImage(128, 128, 64, 64);
+	
+	
+	
 	public Dungeon dungeon;
 	
 	public boolean hit = false;
+	public boolean dead = false;
+	
+	public boolean explode = true;
 
 	public float x = 250;
 	public float y = 375;
@@ -44,12 +55,16 @@ public class Boss {
 	public static int direction = 1;
 	
 	int[] bossDuration = {300, 300, 300};
+	int[] explosionDuration = {150, 150, 150};
 	
 	
 	public Boss(Dungeon dungeon) throws SlickException {
 		
 		Image[] bossPacing = {bossPic1, bossPic2, bossPic3};
+		Image[] explode = {explodePic1, explodePic2, explodePic3};
 		pacing = new Animation(bossPacing, bossDuration, true);
+		kaboom = new Animation(explode, explosionDuration, true);
+		
 		boss = pacing;
 		
 		this.dungeon = dungeon;
@@ -69,6 +84,7 @@ public class Boss {
 //		g.drawString("distance to Player: " + distanceToPlayer, 300, 600);
 
 		//if(!hit)
+		if(!dead)
 		boss.draw(x, y);
 		
 		
@@ -128,6 +144,17 @@ public class Boss {
 			
 			break;
 			
+		}
+		
+		if(bossMaxHealth > 3) {
+			boss = kaboom;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dead = true;
 		}
 		
 //		if(Player.distanceToBoss.x < 50)
