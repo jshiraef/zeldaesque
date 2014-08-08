@@ -83,17 +83,18 @@ public class Boss {
 		if(!destroyed) {
 			bossCenterX = x + bossPic1.getHeight()/2;
 			bossCenterY = y + bossPic2.getWidth()/2;
+			
+	
 			if(!dead) {
 				drawBossHealthBar(g);
 				boss.draw(x, y);
+				
+				if(hit)
+					bossPic1.drawFlash(x,  y);
+				
 			}
 			else explode();
 			}
-		
-		
-		
-		
-		
 		
 	}
 	
@@ -112,6 +113,7 @@ public class Boss {
 		case 1:
 			if (angry) {
 				
+				System.out.println("Watch out");
 				
 				if(distanceToPlayer.x < 0)
 					x +=.07;
@@ -122,12 +124,12 @@ public class Boss {
 				else if (distanceToPlayer.y > 0)
 					y -= .07;
 				
-				Player.sprite = Player.hit;
+				hit = true;
 			}
 			
 			else direction = 2;
 			
-			System.out.println("Watch out");
+			
 			break;
 				
 		case 2:
@@ -156,9 +158,11 @@ public class Boss {
 			
 		}
 		
-		if(bossMaxHealth > 3) {
+		if(bossMaxHealth > 2) {
 			dead = true;
 		}
+		
+		
 		
 //		if(Player.distanceToBoss.x < 50)
 //		angry = true;

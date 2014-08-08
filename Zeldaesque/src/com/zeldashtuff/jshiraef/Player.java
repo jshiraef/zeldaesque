@@ -190,7 +190,7 @@ public class Player {
 			 	
 				 dungeon.boss.bossMaxHealth += .0001;
 			 }
-			 else dungeon.boss.hit = true;
+			 else dungeon.boss.hit = false;
 		 		
 		 }
 		
@@ -202,6 +202,7 @@ public class Player {
 			System.out.println("hit damage");
 			
 			Boss.angry = true;
+			Boss.direction = 1;
 			
 			maxHealth += .5;
 
@@ -236,7 +237,7 @@ public class Player {
 			
 			if (projectileCooldown <= 0) {
 			pc.addArrow(new Arrow(x, y, this, this.playerDirection));
-			projectileCooldown = 60;
+			projectileCooldown = 200;
 			}
 			
 		}
