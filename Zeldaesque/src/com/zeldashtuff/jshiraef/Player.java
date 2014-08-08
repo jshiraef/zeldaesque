@@ -45,7 +45,7 @@ public class Player {
 	public Direction playerDirection;
 	
 	private int projectileCooldown = 0;
-	public boolean hasBeenShot = false;
+	public int damageCooldown = 0;
 	
 	private float speed = .15f;
 	
@@ -80,7 +80,7 @@ public class Player {
 	
 	public void render(Graphics g) {
 		
-		if (maxHealth > 3) {
+		if (healthBarWidth <= 0) {
 			playerDeath();
 		}
 		
@@ -128,14 +128,15 @@ public class Player {
 			
 			if (!dungeon.isBlocked(x, y - delta * 0.1f))
 	          {
-				if(y < (0 - (heroPic1.getHeight()/2)))
-					y = 0 - (heroPic1.getHeight()/2);
+				if(y < (0 - (heroPic1.getHeight()/2))) //edge of screen collision detection
+					y = 0 - (heroPic1.getHeight()/2); //edge of screen collision detection
 				else {
                 sprite.update(delta);
                 y -= delta* speed;
 				}
             }
 		}
+		
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
 			playerDirection = Direction.SOUTH;
@@ -151,6 +152,7 @@ public class Player {
 					}
              }
 		}
+		
 		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
 			 playerDirection = Direction.EAST;
@@ -161,6 +163,7 @@ public class Player {
                 x -= delta* speed;
             }
 		}
+		 
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
 			playerDirection = Direction.WEST;
@@ -188,7 +191,9 @@ public class Player {
 			 
 			 	dungeon.boss.hit = true;
 			 	
-				 dungeon.boss.bossMaxHealth += .0001;
+			 	if (damageCooldown <= 0)
+				 dungeon.boss.bossHealthBarWidth -= 25;
+			 		damageCooldown = 300;
 			 }
 			 else dungeon.boss.hit = false;
 		 		
@@ -204,7 +209,8 @@ public class Player {
 			Boss.angry = true;
 			Boss.direction = 1;
 			
-			maxHealth += .5;
+//			maxHealth += .5;
+			healthBarWidth -= 50;
 
 				if(distanceToBoss.x > 35) {
 					sprite = hit;
@@ -233,18 +239,22 @@ public class Player {
 		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
-//			Arrow.loaded = true;
 			
 			if (projectileCooldown <= 0) {
 			pc.addArrow(new Arrow(x, y, this, this.playerDirection));
-			projectileCooldown = 200;
+			projectileCooldown = 300;
 			}
 			
 		}
 		
 		if(projectileCooldown > 0){
 			projectileCooldown -= delta;
-		System.out.println("projectile cooldown " + projectileCooldown);
+//		System.out.println("projectile cooldown " + projectileCooldown);
+		}
+		
+		if(damageCooldown > 0) {
+			damageCooldown -= delta;
+			System.out.println("damage cooldown " +  damageCooldown);
 		}
 		
 	}

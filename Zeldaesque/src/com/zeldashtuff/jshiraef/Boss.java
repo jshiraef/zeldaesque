@@ -124,7 +124,6 @@ public class Boss {
 				else if (distanceToPlayer.y > 0)
 					y -= .07;
 				
-				hit = true;
 			}
 			
 			else direction = 2;
@@ -158,7 +157,7 @@ public class Boss {
 			
 		}
 		
-		if(bossMaxHealth > 2) {
+		if(bossHealthBarWidth <= 0) {
 			dead = true;
 		}
 		
