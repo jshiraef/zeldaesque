@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -24,6 +25,8 @@ public class Player {
 	Image heroPic2 = new Image("res/linkWalking2.png");
 	Image damagedHeroPic1 = new Image("res/damagedLinkWalking.png");
 	Image damagedHeroPic2 = new Image("res/damagedLinkWalking.png");
+	
+	Image fullLinkSpriteSheet = new Image("res/LinkSpriteSheet.png");
 	
 	Image gameOver = new Image("res/GameOver.png");
 	
@@ -69,6 +72,8 @@ public class Player {
 		Image[] movementUp ={heroPic1, heroPic2};
 		Image[] movementDown = {new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
 		Image[] damaged = {damagedHeroPic1, heroPic1, damagedHeroPic2, heroPic2};
+		
+		down = new Animation(new SpriteSheet(fullLinkSpriteSheet, 45, 80), 1, 1, 180, 1, true, 200, true);
 		
 		up = new Animation(movementUp, duration, false);
 		hit = new Animation(damaged, damageDuration, false);
@@ -139,6 +144,7 @@ public class Player {
 		
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
+			sprite = down;
 			playerDirection = Direction.SOUTH;
 			
 			 if (!dungeon.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
