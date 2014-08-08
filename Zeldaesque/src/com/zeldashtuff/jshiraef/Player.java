@@ -29,6 +29,7 @@ public class Player {
 	
 	public float x = 64f;
 	public float y = 64f;
+
 	
 	int playerTileX;
 	int playerTileY;
@@ -43,7 +44,8 @@ public class Player {
 	
 	public Direction playerDirection;
 	
-	
+	private int projectileCooldown = 0;
+	public boolean hasBeenShot = false;
 	
 	private float speed = .15f;
 	
@@ -232,10 +234,17 @@ public class Player {
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 //			Arrow.loaded = true;
 			
-			
+			if (projectileCooldown <= 0) {
 			pc.addArrow(new Arrow(x, y, this, this.playerDirection));
+			projectileCooldown = 60;
+			}
+			
 		}
 		
+		if(projectileCooldown > 0){
+			projectileCooldown -= delta;
+		System.out.println("projectile cooldown " + projectileCooldown);
+		}
 		
 	}
 	
