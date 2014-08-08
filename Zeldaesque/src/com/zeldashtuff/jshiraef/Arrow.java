@@ -31,7 +31,7 @@ public class Arrow {
 		
 		this.x = x;
 		this.y = y;
-		this.direction = playerDirection;
+		this.direction = direction;
 		
 	}
 	

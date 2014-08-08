@@ -233,7 +233,7 @@ public class Player {
 //			Arrow.loaded = true;
 			
 			
-			pc.addArrow(new Arrow(x, y, this, Direction.NORTH));
+			pc.addArrow(new Arrow(x, y, this, this.playerDirection));
 		}
 		
 		
@@ -268,12 +268,6 @@ public class Player {
 		this.y = y;
 	}
 	
-	public int getPlayerDirection() {
-		return playerDirection;
-	}
-	
-	public void setPlayerDirection(int direction) {
-		this.playerDirection = direction;
-	}
+
 
 }
