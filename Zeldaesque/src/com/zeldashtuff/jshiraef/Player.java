@@ -41,6 +41,8 @@ public class Player {
 	public Dungeon dungeon;
 	public ProjectileController pc;
 	
+	public Direction playerDirection;
+	
 	
 	
 	private float speed = .15f;
@@ -120,6 +122,7 @@ public class Player {
 		
 		if (input.isKeyDown(Input.KEY_UP))
 		{
+			playerDirection = Direction.NORTH;
 			
 			if (!dungeon.isBlocked(x, y - delta * 0.1f))
 	          {
@@ -133,6 +136,8 @@ public class Player {
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
+			playerDirection = Direction.SOUTH;
+			
 			 if (!dungeon.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
              {
 				 if(y > (Zeldaesque.screenHeight - 74)) //edge of screen collision detection
@@ -146,7 +151,8 @@ public class Player {
 		}
 		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
-			
+			 playerDirection = Direction.EAST;
+			 
 			if (!dungeon.isBlocked(x - delta * 0.1f, y))
             {
                 sprite.update(delta);
@@ -155,6 +161,7 @@ public class Player {
 		}
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
+			playerDirection = Direction.WEST;
 			
 			 if (!dungeon.isBlocked(x + sprite.getWidth() + delta * 0.1f, y))
              {
@@ -192,7 +199,6 @@ public class Player {
 		if((distanceToBoss.x < 40 && distanceToBoss.x > - 40) && (distanceToBoss.y < 60 && distanceToBoss.y > -60)) {
 			System.out.println("hit damage");
 			
-			Boss.direction = 1;
 			Boss.angry = true;
 			
 			maxHealth += .5;
@@ -260,6 +266,14 @@ public class Player {
 	
 	public void setY() {
 		this.y = y;
+	}
+	
+	public int getPlayerDirection() {
+		return playerDirection;
+	}
+	
+	public void setPlayerDirection(int direction) {
+		this.playerDirection = direction;
 	}
 
 }

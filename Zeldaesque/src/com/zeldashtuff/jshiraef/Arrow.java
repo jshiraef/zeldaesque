@@ -31,14 +31,23 @@ public class Arrow {
 		
 		this.x = x;
 		this.y = y;
-		this.direction = direction;
+		this.direction = playerDirection;
 		
 	}
 	
 	public void update() {
 		
-		
+		if (direction == Direction.NORTH)
 			y -= 1;
+		
+		else if(direction == Direction.SOUTH)
+			y += 1;
+		
+		else if(direction == Direction.EAST)
+			x -= 1;
+		
+		else if(direction == Direction.WEST)
+			x += 1;
 		
 	}
 	
