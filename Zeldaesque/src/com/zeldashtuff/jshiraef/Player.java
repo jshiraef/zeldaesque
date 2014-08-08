@@ -188,7 +188,7 @@ public class Player {
 			 
 			 	dungeon.boss.hit = true;
 			 	
-				 dungeon.boss.bossMaxHealth += .00001;
+				 dungeon.boss.bossMaxHealth += .0001;
 			 }
 			 else dungeon.boss.hit = true;
 		 		
