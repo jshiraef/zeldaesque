@@ -5,21 +5,18 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Boss {
 
-	Animation boss, pacing, kaboom;
+	Animation boss, pacing, kaboom, fullKaboom;
 	
 	Image bossPic1 = new Image("res/girlBoss.png");
 	Image bossPic2 = new Image("res/girlBoss2.png");
 	Image bossPic3 = new Image("res/girlBoss3.png");
 	
-	Image explosions = new Image("res/explodingSheet.png");
-	
-	Image explodePic1 = explosions.getSubImage(1, 1, 64, 64);
-	Image explodePic2 = explosions.getSubImage(64, 64, 64, 64);
-	Image explodePic3 = explosions.getSubImage(128, 128, 64, 64);
+	Image fullExplosionSpriteSheet = new Image("res/explodingSheet2.png");
 	
 	
 	
@@ -28,7 +25,7 @@ public class Boss {
 	public boolean hit = false;
 	public boolean dead = false;
 	
-	public boolean explode = true;
+	public boolean destroyed = false;
 
 	public float x = 250;
 	public float y = 375;
@@ -55,15 +52,15 @@ public class Boss {
 	public static int direction = 1;
 	
 	int[] bossDuration = {300, 300, 300};
-	int[] explosionDuration = {150, 150, 150};
+	int[] explosionDuration = {150, 150, 250, 250};
 	
 	
 	public Boss(Dungeon dungeon) throws SlickException {
 		
 		Image[] bossPacing = {bossPic1, bossPic2, bossPic3};
-		Image[] explode = {explodePic1, explodePic2, explodePic3};
+
 		pacing = new Animation(bossPacing, bossDuration, true);
-		kaboom = new Animation(explode, explosionDuration, true);
+		fullKaboom = new Animation(new SpriteSheet(fullExplosionSpriteSheet, 64, 64), 100);
 		
 		boss = pacing;
 		
@@ -73,8 +70,7 @@ public class Boss {
 	public void render(Graphics g) {
 		
 		
-		bossCenterX = x + bossPic1.getHeight()/2;
-		bossCenterY = y + bossPic2.getWidth()/2;
+		
 		
 		
 //		g.drawString(" Boss's X: " + bossTileX +  "\n Boss's Y: " + bossTileY, 700, 100);
@@ -84,12 +80,19 @@ public class Boss {
 //		g.drawString("distance to Player: " + distanceToPlayer, 300, 600);
 
 		//if(!hit)
-		if(!dead)
-		boss.draw(x, y);
+		if(!destroyed) {
+			bossCenterX = x + bossPic1.getHeight()/2;
+			bossCenterY = y + bossPic2.getWidth()/2;
+			if(!dead) {
+				drawBossHealthBar(g);
+				boss.draw(x, y);
+			}
+			else explode();
+			}
 		
 		
 		
-		drawBossHealthBar(g);
+		
 		
 		
 	}
@@ -97,7 +100,7 @@ public class Boss {
 	public void update(int delta) {
 		
 		
-		
+		if(!destroyed) {
 		Vector2f distanceToPlayer = new Vector2f(bossCenterX - dungeon.player.playerCenterX, bossCenterY - dungeon.player.playerCenterY);
 		
 		actualSeparation = Math.sqrt(distanceToPlayer.x * distanceToPlayer.x + distanceToPlayer.y * distanceToPlayer.y);
@@ -119,7 +122,7 @@ public class Boss {
 				else if (distanceToPlayer.y > 0)
 					y -= .07;
 				
-//				Player.sprite = Player.hit;
+				Player.sprite = Player.hit;
 			}
 			
 			else direction = 2;
@@ -143,17 +146,17 @@ public class Boss {
 					direction = 2;
 			
 			break;
+		}
+	
+			
+		}
+		else {
+			bossCenterX = -100;
+			bossCenterY = -100;
 			
 		}
 		
 		if(bossMaxHealth > 3) {
-			boss = kaboom;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			dead = true;
 		}
 		
@@ -167,6 +170,17 @@ public class Boss {
 		g.setColor(healthBarColor);
 		g.fillRect(x, y, bossHealthBarWidth * healthScale, bossHealthBarHeight);
 		g.drawString("Boss's HP", x, y - 20);
+	}
+	
+	public void explode() {
+		fullKaboom.setLooping(false);
+		fullKaboom.draw(x, y);
+		
+		System.out.println("explode frame is " + fullKaboom.getFrame());
+		
+		if (fullKaboom.getFrame() == 19)
+			destroyed = true;
+			
 	}
 	
 	public float getBossX() {
