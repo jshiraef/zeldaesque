@@ -30,6 +30,11 @@ public class Player {
 	
 	Image gameOver = new Image("res/GameOver.png");
 	
+	Image walkingDown = fullLinkSpriteSheet.getSubImage(1, 1, 199, 84);
+	Image walkingLeft = fullLinkSpriteSheet.getSubImage(1, 86, 199, 84);
+	Image walkingRight = fullLinkSpriteSheet.getSubImage(1, 171, 199, 84);
+	Image walkingUp = fullLinkSpriteSheet.getSubImage(1, 255, 199, 84);
+	
 	public float x = 64f;
 	public float y = 64f;
 
@@ -50,7 +55,7 @@ public class Player {
 	private int projectileCooldown = 0;
 	public int damageCooldown = 0;
 	
-	private float speed = .15f;
+	private float speed = .2f;
 	
 	public float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
 	
@@ -73,11 +78,16 @@ public class Player {
 		Image[] movementDown = {new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
 		Image[] damaged = {damagedHeroPic1, heroPic1, damagedHeroPic2, heroPic2};
 		
-		down = new Animation(new SpriteSheet(fullLinkSpriteSheet, 45, 80), 1, 1, 180, 1, true, 200, true);
+//		down = new Animation(new SpriteSheet(fullLinkSpriteSheet, 45, 80), 1, 1, 180, 1, true, 200, true);
 		
-		up = new Animation(movementUp, duration, false);
+		down = new Animation(new SpriteSheet(walkingDown, 49, 84), 250);
+		up = new Animation(new SpriteSheet(walkingUp, 49, 84), 250);
+		left = new Animation(new SpriteSheet(walkingLeft, 49, 84), 250);
+		right = new Animation(new SpriteSheet(walkingRight, 49, 84), 250);
+		
+		
 		hit = new Animation(damaged, damageDuration, false);
-		sprite = up; 
+		sprite = down; 
 		
 	}
 	
@@ -91,8 +101,8 @@ public class Player {
 		
 		drawHealthBar(g);
 		
-		playerCenterX = x + heroPic1.getHeight()/2;
-		playerCenterY = y + heroPic2.getWidth()/2;
+		playerCenterX = x + 25;
+		playerCenterY = y + 50;
 	
 	
 //		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
@@ -102,6 +112,7 @@ public class Player {
 		
 		sprite.draw(x, y);
 		pc.render(g);
+		
 		
 		
 
@@ -130,11 +141,11 @@ public class Player {
 		if (input.isKeyDown(Input.KEY_UP))
 		{
 			playerDirection = Direction.NORTH;
-			
+			sprite = up;
 			if (!dungeon.isBlocked(x, y - delta * 0.1f))
 	          {
-				if(y < (0 - (heroPic1.getHeight()/2))) //edge of screen collision detection
-					y = 0 - (heroPic1.getHeight()/2); //edge of screen collision detection
+				if(y < (0 - (walkingDown.getHeight()/2))) //edge of screen collision detection
+					y = 0 - (walkingDown.getHeight()/2); //edge of screen collision detection
 				else {
                 sprite.update(delta);
                 y -= delta* speed;
@@ -149,8 +160,8 @@ public class Player {
 			
 			 if (!dungeon.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
              {
-				 if(y > (Zeldaesque.screenHeight - 74)) //edge of screen collision detection
-						y = Zeldaesque.screenHeight - 74; //edge of screen collision detection
+				 if(y > (Zeldaesque.screenHeight - 90)) //edge of screen collision detection
+						y = Zeldaesque.screenHeight - 90; //edge of screen collision detection
 					else {
 						
                  sprite.update(delta);
@@ -162,7 +173,7 @@ public class Player {
 		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
 			 playerDirection = Direction.EAST;
-			 
+			 sprite = left;
 			if (!dungeon.isBlocked(x - delta * 0.1f, y))
             {
                 sprite.update(delta);
@@ -173,7 +184,7 @@ public class Player {
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
 			playerDirection = Direction.WEST;
-			
+			sprite = right;
 			 if (!dungeon.isBlocked(x + sprite.getWidth() + delta * 0.1f, y))
              {
                  sprite.update(delta);
