@@ -17,18 +17,23 @@ public class Player {
 	
 	
 
-	static Animation sprite, up, down, left, right, hit; //redundant variables?
+	static Animation sprite, up, down, left, right, hit, hitDown, hitUp, hitRight, hitLeft; //redundant variables?
 
 
 	
-	Image heroPic1 = new Image("res/linkWalking.png");
-	Image heroPic2 = new Image("res/linkWalking2.png");
+	
 	Image damagedHeroPic1 = new Image("res/damagedLinkWalking.png");
 	Image damagedHeroPic2 = new Image("res/damagedLinkWalking.png");
 	
 	Image fullLinkSpriteSheet = new Image("res/LinkSpriteSheet.png");
+	Image damagedLink = new Image("res/damagedLinkSpriteSheet.png");
 	
 	Image gameOver = new Image("res/GameOver.png");
+	
+	Image damagedDown = damagedLink.getSubImage(1, 1, 199, 84);
+	Image damagedLeft = damagedLink.getSubImage(1, 86, 199, 84);
+	Image damagedRight = damagedLink.getSubImage(1, 171, 199, 84);
+	Image damagedUp = damagedLink.getSubImage(1, 255, 199, 84);
 	
 	Image walkingDown = fullLinkSpriteSheet.getSubImage(1, 1, 199, 84);
 	Image walkingLeft = fullLinkSpriteSheet.getSubImage(1, 86, 199, 84);
@@ -46,6 +51,7 @@ public class Player {
 	public float playerCenterY;
 	
 	public boolean inBossRoom = false;
+	public boolean playerHit = false;
 	
 	public Dungeon dungeon;
 	public ProjectileController pc;
@@ -53,7 +59,8 @@ public class Player {
 	public Direction playerDirection;
 	
 	private int projectileCooldown = 0;
-	public int damageCooldown = 0;
+	public int bossDamageCooldown = 0;
+	public int playerDamageCooldown = 0;
 	
 	private float speed = .2f;
 	
@@ -74,19 +81,23 @@ public class Player {
 		
 		this.dungeon = dungeon;
 		
-		Image[] movementUp ={heroPic1, heroPic2};
+		
 		Image[] movementDown = {new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
-		Image[] damaged = {damagedHeroPic1, heroPic1, damagedHeroPic2, heroPic2};
+//		Image[] damaged = {damagedHeroPic1, heroPic1, damagedHeroPic2, heroPic2};
+	
 		
-//		down = new Animation(new SpriteSheet(fullLinkSpriteSheet, 45, 80), 1, 1, 180, 1, true, 200, true);
-		
-		down = new Animation(new SpriteSheet(walkingDown, 49, 84), 250);
-		up = new Animation(new SpriteSheet(walkingUp, 49, 84), 250);
-		left = new Animation(new SpriteSheet(walkingLeft, 49, 84), 250);
-		right = new Animation(new SpriteSheet(walkingRight, 49, 84), 250);
+		this.down = new Animation(new SpriteSheet(walkingDown, 49, 84), 250);
+		this.up = new Animation(new SpriteSheet(walkingUp, 49, 84), 250);
+		this.left = new Animation(new SpriteSheet(walkingLeft, 49, 84), 250);
+		this.right = new Animation(new SpriteSheet(walkingRight, 49, 84), 250);
 		
 		
-		hit = new Animation(damaged, damageDuration, false);
+		hitDown = new Animation(new SpriteSheet(damagedDown, 49, 84), 250);
+		hitUp = new Animation(new SpriteSheet(damagedUp, 49, 84), 250);
+		hitLeft = new Animation(new SpriteSheet(damagedLeft, 49, 84), 250);
+		hitRight = new Animation(new SpriteSheet(damagedRight, 49, 84), 250);
+		
+		
 		sprite = down; 
 		
 	}
@@ -115,9 +126,8 @@ public class Player {
 		
 		
 		
-
-		
 	}
+	
 	
 	public void update(Input input, int delta) throws SlickException {
 		
@@ -135,13 +145,17 @@ public class Player {
 		
 		
 		
-		
+		 
 //		speed *= delta; 	
 		
 		if (input.isKeyDown(Input.KEY_UP))
 		{
 			playerDirection = Direction.NORTH;
-			sprite = up;
+			
+			if(playerHit)
+				sprite = hitUp;
+			else sprite = up;
+			
 			if (!dungeon.isBlocked(x, y - delta * 0.1f))
 	          {
 				if(y < (0 - (walkingDown.getHeight()/2))) //edge of screen collision detection
@@ -155,8 +169,12 @@ public class Player {
 		
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
-			sprite = down;
+			
 			playerDirection = Direction.SOUTH;
+			
+			if(playerHit)
+				sprite = hitDown;
+			else sprite = down;
 			
 			 if (!dungeon.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
              {
@@ -173,7 +191,11 @@ public class Player {
 		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
 			 playerDirection = Direction.EAST;
-			 sprite = left;
+
+			 if(playerHit)
+					sprite = hitLeft;
+				else sprite = left;
+			 
 			if (!dungeon.isBlocked(x - delta * 0.1f, y))
             {
                 sprite.update(delta);
@@ -184,7 +206,11 @@ public class Player {
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
 			playerDirection = Direction.WEST;
-			sprite = right;
+			
+			if(playerHit)
+				sprite = hitRight;
+			else sprite = right;
+			
 			 if (!dungeon.isBlocked(x + sprite.getWidth() + delta * 0.1f, y))
              {
                  sprite.update(delta);
@@ -208,9 +234,9 @@ public class Player {
 			 
 			 	dungeon.boss.hit = true;
 			 	
-			 	if (damageCooldown <= 0)
+			 	if (bossDamageCooldown <= 0)
 				 dungeon.boss.bossHealthBarWidth -= 25;
-			 		damageCooldown = 300;
+			 		bossDamageCooldown = 300;
 			 }
 			 else dungeon.boss.hit = false;
 		 		
@@ -226,33 +252,33 @@ public class Player {
 			Boss.angry = true;
 			Boss.direction = 1;
 			
-//			maxHealth += .5;
+			playerDamageCooldown = 1000;
 			healthBarWidth -= 50;
 
 				if(distanceToBoss.x > 35) {
-					sprite = hit;
+					sprite = hitLeft;
 					sprite.update(delta);
 	                x -= delta * 28f;
 				}
 
 				if(distanceToBoss.x < -35) {
-					sprite = hit;
+					sprite = hitRight;
 					sprite.update(delta);
 					x += delta * 28f;
 				}
 
 				if(distanceToBoss.y > 55) {
-					sprite = hit;
+					sprite = hitUp;
 					sprite.update(delta);
 					y -= delta * 28f;
 				}
 
 				if(distanceToBoss.y < -55) {
-					sprite = hit;
+					sprite = hitDown;
 					sprite.update(delta);
 					y += delta * 28f;
 				}
-			System.out.println("Health: " + maxHealth);
+			System.out.println("Health: " + healthBarWidth);
 		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
@@ -269,11 +295,18 @@ public class Player {
 //		System.out.println("projectile cooldown " + projectileCooldown);
 		}
 		
-		if(damageCooldown > 0) {
-			damageCooldown -= delta;
-			System.out.println("damage cooldown " +  damageCooldown);
+		if(bossDamageCooldown > 0) {
+			bossDamageCooldown -= delta;
+//			System.out.println("damage cooldown " +  bossDamageCooldown);
 		}
 		
+		if(playerDamageCooldown > 0) {
+			playerHit = true;
+			playerDamageCooldown -= delta;
+			System.out.println("Player damage cooldown " +  playerDamageCooldown);
+		}
+		else playerHit = false;
+			
 	}
 	
 	public void playerDeath() {
