@@ -12,6 +12,7 @@ public class Dungeon {
 	
 	public Player player;
 	public Boss boss;
+//	public Baddie baddie;
 	
 	private boolean[][] blocked;
 	
@@ -50,7 +51,8 @@ public class Dungeon {
 		if(player.inBadRoom)
 		{
 			loadRoom();
-			baddie.render();
+			boss.render(g);
+//			baddie.render();
 		}
 		
 	}
@@ -86,7 +88,7 @@ public class Dungeon {
 			return "room4";
 			//System.out.println("It should be room 2!");
 		case 3 : 
-			return "room5";
+			return "room6";
 		default:
 			return "room5";
 		}

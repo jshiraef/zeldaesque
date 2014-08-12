@@ -1,5 +1,6 @@
 package com.zeldashtuff.jshiraef;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -8,9 +9,18 @@ public class Baddie extends Boss{
 	private float x = 100;
 	private float y = 100;
 	
+	private float centerX = 0;
+	private float centerY = 0;
+	
 
-	public Baddie(Dungeon dungeon) throws SlickException {
+	public Baddie(float x, float y, float centerX, float centerY, Dungeon dungeon) throws SlickException {
 		super(dungeon);
+		
+		this.x = x;
+		this.y = y;
+		this.centerX = centerX;
+		this.centerY = centerY;
+		this.dungeon = dungeon;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -80,6 +90,34 @@ public void update(int delta) {
 //		if(Player.distanceToBoss.x < 50)
 //		angry = true;
 		
+	}
+
+	public void render(Graphics g)	 {
+		
+		if(!destroyed) {
+			bossCenterX = x + bossPic1.getHeight()/2;
+			bossCenterY = y + bossPic2.getWidth()/2;
+			
+	
+			if(!dead) {
+				drawBossHealthBar(g);
+				boss.draw(x, y);
+				
+				if(hit)
+					bossPic1.drawFlash(x,  y);
+				
+			}
+			else explode();
+			}
+		
+	}
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
 	}
 
 }

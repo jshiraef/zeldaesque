@@ -14,12 +14,12 @@ public class BaddieController {
 		
 	}
 	
-	public void update() {
+	public void update(int delta) {
 		
 		for (int i = 0; i < minions.size(); i++) {
 			TempBaddie = minions.get(i);
 			
-			TempBaddie.update();
+			TempBaddie.update(delta);
 		}
 	}
 	

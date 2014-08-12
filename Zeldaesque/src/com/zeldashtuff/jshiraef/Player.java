@@ -144,13 +144,13 @@ public class Player {
 			y = 600;
 		}
 		
-		if(x < 890)
+		if(x > 890)
 		{
 			
 			inBadRoom = true;
 			dungeon.currentRoom = 3;
 			dungeon.room = new TiledMap("lvl/" + dungeon.switchRoom(dungeon.currentRoom) + ".tmx");
-			y = 10;
+			x = 10;
 		}
 		
 		

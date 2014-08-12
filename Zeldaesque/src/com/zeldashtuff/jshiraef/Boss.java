@@ -35,7 +35,7 @@ public class Boss {
 	
 	public Color healthBarColor = Color.blue;
 	
-	private double actualSeparation;
+	protected double actualSeparation;
 	
 	public static boolean angry = false;
 	
