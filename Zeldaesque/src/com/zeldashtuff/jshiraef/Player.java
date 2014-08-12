@@ -51,6 +51,7 @@ public class Player {
 	public float playerCenterY;
 	
 	public boolean inBossRoom = false;
+	public boolean inBadRoom = false;
 	public boolean playerHit = false;
 	
 	public Dungeon dungeon;
@@ -117,7 +118,7 @@ public class Player {
 	
 	
 //		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
-//		g.drawString(" Link's X: " + playerX +  "\n Link's Y: " + playerY, 500, 400);
+		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 400);
 		
 //		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
 		
@@ -141,6 +142,15 @@ public class Player {
 			dungeon.currentRoom = 2;
 			dungeon.room = new TiledMap("lvl/" + dungeon.switchRoom(dungeon.currentRoom) + ".tmx");
 			y = 600;
+		}
+		
+		if(x < 890)
+		{
+			
+			inBadRoom = true;
+			dungeon.currentRoom = 3;
+			dungeon.room = new TiledMap("lvl/" + dungeon.switchRoom(dungeon.currentRoom) + ".tmx");
+			y = 10;
 		}
 		
 		

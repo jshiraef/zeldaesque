@@ -47,6 +47,12 @@ public class Dungeon {
 		
 		player.render(g);
 		
+		if(player.inBadRoom)
+		{
+			loadRoom();
+			baddie.render();
+		}
+		
 	}
 	
 	public void update (GameContainer container, int delta) throws SlickException {
