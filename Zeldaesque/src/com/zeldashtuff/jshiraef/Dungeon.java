@@ -12,7 +12,7 @@ public class Dungeon {
 	
 	public Player player;
 	public Boss boss;
-//	public Baddie baddie;
+	public BaddieController bc;
 	
 	private boolean[][] blocked;
 	
@@ -29,6 +29,7 @@ public class Dungeon {
 		
 		boss = new Boss(this);
 		player = new Player(this);
+		bc = new BaddieController();
 		
 		
 		loadRoom();
@@ -52,7 +53,7 @@ public class Dungeon {
 		{
 			loadRoom();
 			boss.render(g);
-//			baddie.render();
+			bc.render(g);
 		}
 		
 	}
@@ -63,6 +64,16 @@ public class Dungeon {
 		{
 			boss.update(delta);
 		} 
+		
+		if(player.inBadRoom) {
+			bc.update(delta);
+		}
+		
+		if(player.inBadRoom && player.enteredNewRoom) {
+			bc.addBaddie(new Baddie(room.getWidth() * 64/3, room.getHeight() * 64/3, room.getWidth() * 64/3 + 25, room.getHeight() * 64/3 + 34, this));
+			bc.addBaddie(new Baddie(room.getWidth()/2, room.getHeight()/2 * 100, (room.getWidth()/2) + 25, (room.getHeight()/3) + 34, this));
+			player.enteredNewRoom = false;
+		}
 		
 		player.update(container.getInput(), delta);
 		

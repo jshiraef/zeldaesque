@@ -1,10 +1,18 @@
 package com.zeldashtuff.jshiraef;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Baddie extends Boss{
+	
+	Animation soldierRight, soldierLeft;
+	
+	Image soldierRightSpriteSheet = new Image("res/soldierSpriteWalkingRightTest.png");
+	Image soldierLeftSpriteSheet = new Image("res/soldierSpriteWalkingLeftTest.png");
 	
 	private float x = 100;
 	private float y = 100;
@@ -21,14 +29,17 @@ public class Baddie extends Boss{
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.dungeon = dungeon;
-		// TODO Auto-generated constructor stub
+		
+		soldierRight = new Animation(new SpriteSheet(soldierRightSpriteSheet, 50, 68), 150);
+		soldierLeft = new Animation(new SpriteSheet(soldierLeftSpriteSheet, 50, 68), 150);
+		
 	}
 	
 public void update(int delta) {
 		
 		
 		if(!destroyed) {
-		Vector2f distanceToPlayer = new Vector2f(bossCenterX - dungeon.player.playerCenterX, bossCenterY - dungeon.player.playerCenterY);
+		Vector2f distanceToPlayer = new Vector2f(centerX - dungeon.player.playerCenterX, centerY - dungeon.player.playerCenterY);
 		
 		actualSeparation = Math.sqrt(distanceToPlayer.x * distanceToPlayer.x + distanceToPlayer.y * distanceToPlayer.y);
 		
@@ -101,7 +112,7 @@ public void update(int delta) {
 	
 			if(!dead) {
 				drawBossHealthBar(g);
-				boss.draw(x, y);
+				soldierRight.draw(x, y);
 				
 				if(hit)
 					bossPic1.drawFlash(x,  y);

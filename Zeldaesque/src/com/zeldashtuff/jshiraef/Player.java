@@ -53,6 +53,7 @@ public class Player {
 	public boolean inBossRoom = false;
 	public boolean inBadRoom = false;
 	public boolean playerHit = false;
+	public boolean enteredNewRoom = false;
 	
 	public Dungeon dungeon;
 	public ProjectileController pc;
@@ -148,6 +149,7 @@ public class Player {
 		{
 			
 			inBadRoom = true;
+			enteredNewRoom = true;
 			dungeon.currentRoom = 3;
 			dungeon.room = new TiledMap("lvl/" + dungeon.switchRoom(dungeon.currentRoom) + ".tmx");
 			x = 10;
