@@ -20,6 +20,8 @@ public class Baddie extends Boss{
 	private float centerX = 0;
 	private float centerY = 0;
 	
+	public int baddieDamageCooldown;
+	
 	public float baddieHealth = 1, baddieMaxHealth = (float) 1.5, baddieHealthBarX = 100, baddieHealthBarY = 100, baddieHealthBarWidth = 200, baddieHealthBarHeight = 10;
 
 	
@@ -107,6 +109,24 @@ public void update(int delta) {
 		if(baddieHealthBarWidth <= 0) {
 			dead = true;
 		}
+		
+//		for(int i = 0; i < Player.pc.getQuiverSize(); i++	) {
+//			 
+//			 Vector2f distanceToArrow = new Vector2f(dungeon.boss.bossCenterX - Player.pc.TempArrow.getX(), dungeon.boss.bossCenterY - Player.pc.TempArrow.getY());
+//			 System.out.println("distance to arrow" + distanceToArrow);
+//			 
+//			 if ((distanceToArrow.x < dungeon.boss.bossCollisionRadius.x && distanceToArrow.x > -dungeon.boss.bossCollisionRadius.x) && (distanceToArrow.y < dungeon.boss.bossCollisionRadius.y && distanceToArrow.y > -dungeon.boss.bossCollisionRadius.y))
+//			 {
+//				 System.out.println("a HIT!!");
+//			 
+//			 	dungeon.boss.hit = true;
+//			 	
+//			 	if (baddieDamageCooldown <= 0)
+//				 dungeon.boss.bossHealthBarWidth -= 25;
+//			 		baddieDamageCooldown = 300;
+//			 }
+//			 else dungeon.boss.hit = false;
+//		}
 
 //		if(Player.distanceToBoss.x < 50)
 //		angry = true;

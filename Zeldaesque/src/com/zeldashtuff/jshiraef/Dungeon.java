@@ -8,7 +8,7 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Dungeon {
 	
 	public static TiledMap room;
-	public int currentRoom = 0;
+	public static int currentRoom = 0;
 	
 	public Player player;
 	public Boss boss;

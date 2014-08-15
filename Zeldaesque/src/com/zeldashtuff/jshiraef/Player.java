@@ -56,7 +56,7 @@ public class Player {
 	public boolean enteredNewRoom = false;
 	
 	public Dungeon dungeon;
-	public ProjectileController pc;
+	public static ProjectileController pc;
 	
 	public Direction playerDirection;
 	
@@ -237,10 +237,10 @@ public class Player {
 		 
 		 for(int i = 0; i < pc.getQuiverSize(); i++	) {
 			 
-			 Vector2f distanceToArrow = new Vector2f(dungeon.boss.bossCenterX - ProjectileController.TempArrow.getX(), dungeon.boss.bossCenterY - ProjectileController.TempArrow.getY());
+			 Vector2f distanceToArrow = new Vector2f(dungeon.boss.bossCenterX - ProjectileController.TempArrow.getX(), dungeon.boss.bossCenterY - pc.TempArrow.getY());
 //			 System.out.println("distance to arrow" + distanceToArrow);
 			 
-			 if ((distanceToArrow.x < 40 && distanceToArrow.x > -40) && (distanceToArrow.y < 60 && distanceToArrow.y > -60))
+			 if ((distanceToArrow.x < dungeon.boss.bossCollisionRadius.x && distanceToArrow.x > -dungeon.boss.bossCollisionRadius.x) && (distanceToArrow.y < dungeon.boss.bossCollisionRadius.y && distanceToArrow.y > -dungeon.boss.bossCollisionRadius.y))
 			 {
 				 System.out.println("a HIT!!");
 			 
@@ -248,6 +248,7 @@ public class Player {
 			 	
 			 	if (bossDamageCooldown <= 0)
 				 dungeon.boss.bossHealthBarWidth -= 25;
+			 	
 			 		bossDamageCooldown = 300;
 			 }
 			 else dungeon.boss.hit = false;
