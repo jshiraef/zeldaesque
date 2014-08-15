@@ -52,7 +52,7 @@ public class Dungeon {
 		if(player.inBadRoom)
 		{
 			loadRoom();
-			boss.render(g);
+	//		boss.render(g);
 			bc.render(g);
 		}
 		
@@ -70,8 +70,9 @@ public class Dungeon {
 		}
 		
 		if(player.inBadRoom && player.enteredNewRoom) {
-			bc.addBaddie(new Baddie(room.getWidth() * 64/3, room.getHeight() * 64/3, room.getWidth() * 64/3 + 25, room.getHeight() * 64/3 + 34, this));
-			bc.addBaddie(new Baddie(room.getWidth()/2, room.getHeight()/2 * 100, (room.getWidth()/2) + 25, (room.getHeight()/3) + 34, this));
+			bc.addBaddie(new Baddie(getPixelWidth(room)/3, getPixelHeight(room)/3, getPixelWidth(room)/3 + 25, getPixelHeight(room)/3 + 34, this));
+			bc.addBaddie(new Baddie(room.getWidth() * 64/2, room.getHeight()/2 * 100, (room.getWidth()/2) + 25, (room.getHeight()/3) + 34, this));
+			bc.addBaddie(new Baddie((getPixelWidth(room)/3) * 2, getPixelHeight(room)/4, (getPixelWidth(room)/3) * 2 + 25, getPixelHeight(room)/4 + 34, this));
 			player.enteredNewRoom = false;
 		}
 		
@@ -120,6 +121,14 @@ public class Dungeon {
 	                 }
 	             }
 	         }
+	}
+	
+	public float getPixelWidth(TiledMap room) {
+		return room.getWidth() * 64;
+	}
+	
+	public float getPixelHeight(TiledMap room) {
+		return room.getHeight() * 64;
 	}
 	
 	

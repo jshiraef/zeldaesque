@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Baddie extends Boss{
 	
-	Animation soldierRight, soldierLeft;
+	Animation soldier, soldierRight, soldierLeft;
 	
 	Image soldierRightSpriteSheet = new Image("res/soldierSpriteWalkingRightTest.png");
 	Image soldierLeftSpriteSheet = new Image("res/soldierSpriteWalkingLeftTest.png");
@@ -33,6 +33,7 @@ public class Baddie extends Boss{
 		soldierRight = new Animation(new SpriteSheet(soldierRightSpriteSheet, 50, 68), 150);
 		soldierLeft = new Animation(new SpriteSheet(soldierLeftSpriteSheet, 50, 68), 150);
 		
+		soldier = soldierRight;
 	}
 	
 public void update(int delta) {
@@ -53,13 +54,13 @@ public void update(int delta) {
 				System.out.println("Watch out");
 				
 				if(distanceToPlayer.x < 0)
-					x +=.07;
+					x += delta * bossSpeed;
 				else if (distanceToPlayer.x > 0)
-					x -= .07;
+					x -= delta * bossSpeed;
 				if(distanceToPlayer.y < 0)
-					y +=.07;
+					y += delta * bossSpeed;
 				else if (distanceToPlayer.y > 0)
-					y -= .07;
+					y -= delta * bossSpeed;
 				
 			}
 			
@@ -70,18 +71,24 @@ public void update(int delta) {
 				
 		case 2:
 				
-			if (x < 350)
+			if (x < 450) {
+				soldier = soldierRight;
 				x += .1;
+			}
 			else
 				direction = 3;
+			System.out.println("Baddie should have just switched to case 3");
 			
 			break;
 		case 3:
 
-				if (x > 200)
+				if (x > 200) {
+					soldier = soldierLeft;
 					x -= .1;
+				}
 				else
 					direction = 2;
+				System.out.println("Baddie should now have switched to case 2");
 			
 			break;
 		}
@@ -112,7 +119,7 @@ public void update(int delta) {
 	
 			if(!dead) {
 				drawBossHealthBar(g);
-				soldierRight.draw(x, y);
+				soldier.draw(x, y);
 				
 				if(hit)
 					bossPic1.drawFlash(x,  y);
