@@ -30,6 +30,8 @@ public class Boss {
 	public float x = 250;
 	public float y = 375;
 	
+	public float bossSpeed = (float) 0.05;
+	
 	public float bossCenterX;
 	public float bossCenterY;
 	
@@ -41,7 +43,7 @@ public class Boss {
 	
 	public float bossHealth = 1, bossMaxHealth = (float) 1.5, bossHealthBarX = 100, bossHealthBarY = 100, bossHealthBarWidth = 200, bossHealthBarHeight = 10;
 	
-	
+	Vector2f bossCollisionRadius = new Vector2f(40, 60);
 	
 //	public static int bossTileX;
 //	public static int bossTileY;
@@ -116,13 +118,13 @@ public class Boss {
 				System.out.println("Watch out");
 				
 				if(distanceToPlayer.x < 0)
-					x +=.07;
+					x += delta * bossSpeed;
 				else if (distanceToPlayer.x > 0)
-					x -= .07;
+					x -= delta * bossSpeed;
 				if(distanceToPlayer.y < 0)
-					y +=.07;
+					y += delta * bossSpeed;
 				else if (distanceToPlayer.y > 0)
-					y -= .07;
+					y -= delta * bossSpeed;
 				
 			}
 			

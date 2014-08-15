@@ -258,7 +258,7 @@ public class Player {
 		
 		Vector2f distanceToBoss = new Vector2f (dungeon.boss.bossCenterX - playerCenterX, dungeon.boss.bossCenterY - playerCenterY);
 		
-		if((distanceToBoss.x < 40 && distanceToBoss.x > - 40) && (distanceToBoss.y < 60 && distanceToBoss.y > -60)) {
+		if((distanceToBoss.x < dungeon.boss.bossCollisionRadius.x && distanceToBoss.x > - dungeon.boss.bossCollisionRadius.x) && (distanceToBoss.y < dungeon.boss.bossCollisionRadius.y && distanceToBoss.y > - dungeon.boss.bossCollisionRadius.y)) {
 			System.out.println("hit damage");
 			
 			Boss.angry = true;
