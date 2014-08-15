@@ -10,7 +10,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="15" height="11">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NiYGBgIhMzImFmJIwuR0geXQ7dfEJmo6vDpYZWenGFCT71xKgjxw5scURIDzMWzESkvfj0YvMvMekKAIIAH0aUAgAA
+   H4sIAAAAAAAAC2NiYGBgIhMzImFmJIwuR0geXQ7dfEJmY1OHTZ5WenGFCT71xKgjxw5scURIDzMWzESkvfj0YvMvMekKAED4CeeUAgAA
   </data>
  </layer>
 </map>

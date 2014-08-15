@@ -20,6 +20,9 @@ public class Baddie extends Boss{
 	private float centerX = 0;
 	private float centerY = 0;
 	
+	public float baddieHealth = 1, baddieMaxHealth = (float) 1.5, baddieHealthBarX = 100, baddieHealthBarY = 100, baddieHealthBarWidth = 200, baddieHealthBarHeight = 10;
+
+	
 
 	public Baddie(float x, float y, float centerX, float centerY, Dungeon dungeon) throws SlickException {
 		super(dungeon);
@@ -96,12 +99,12 @@ public void update(int delta) {
 			
 		}
 		else {
-			bossCenterX = -100;
-			bossCenterY = -100;
+			centerX = -100;
+			centerY = -100;
 			
 		}
 		
-		if(bossHealthBarWidth <= 0) {
+		if(baddieHealthBarWidth <= 0) {
 			dead = true;
 		}
 
@@ -113,12 +116,12 @@ public void update(int delta) {
 	public void render(Graphics g)	 {
 		
 		if(!destroyed) {
-			bossCenterX = x + bossPic1.getHeight()/2;
-			bossCenterY = y + bossPic2.getWidth()/2;
+			centerX = x + 25;
+			centerY = y + 34;
 			
 	
 			if(!dead) {
-				drawBossHealthBar(g);
+				drawBaddieHealthBar(g);
 				soldier.draw(x, y);
 				
 				if(hit)
@@ -128,6 +131,13 @@ public void update(int delta) {
 			else explode();
 			}
 		
+	}
+	
+	public void drawBaddieHealthBar(Graphics g) {
+		float healthScale = baddieHealth/baddieMaxHealth;
+		g.setColor(healthBarColor);
+		g.fillRect(x, y, baddieHealthBarWidth * healthScale, baddieHealthBarHeight);
+		g.drawString("Baddie's HP", x, y - 20);
 	}
 	
 	public float getX() {

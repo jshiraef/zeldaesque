@@ -88,7 +88,7 @@ public class Boss {
 			
 	
 			if(!dead) {
-	//			drawBossHealthBar(g);
+				drawBossHealthBar(g);
 				boss.draw(x, y);
 				
 				if(hit)
