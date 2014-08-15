@@ -56,7 +56,7 @@ public class Player {
 	public boolean enteredNewRoom = false;
 	
 	public Dungeon dungeon;
-	public static ProjectileController pc;
+	;
 	
 	public Direction playerDirection;
 	
@@ -75,11 +75,6 @@ public class Player {
 		
 		int[] duration = {300, 300};
 		int[] damageDuration = {150, 150, 150, 150};
-		
-		pc = new ProjectileController();
-		
-		
-		
 		
 		this.dungeon = dungeon;
 		
@@ -124,7 +119,7 @@ public class Player {
 //		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
 		
 		sprite.draw(x, y);
-		pc.render(g);
+		dungeon.currentRoom.pc.render(g);
 		
 		
 		
@@ -133,15 +128,14 @@ public class Player {
 	
 	public void update(Input input, int delta) throws SlickException {
 		
-		pc.update();
+		dungeon.currentRoom.pc.update();
 		
 
 		if(y < -25)
 		{
 			
 			inBossRoom = true;
-			dungeon.currentRoom = 2;
-			dungeon.room = new TiledMap("lvl/" + dungeon.switchRoom(dungeon.currentRoom) + ".tmx");
+			dungeon.currentRoom = dungeon.bossRoom;
 			y = 600;
 		}
 		
@@ -150,8 +144,7 @@ public class Player {
 			
 			inBadRoom = true;
 			enteredNewRoom = true;
-			dungeon.currentRoom = 3;
-			dungeon.room = new TiledMap("lvl/" + dungeon.switchRoom(dungeon.currentRoom) + ".tmx");
+			dungeon.currentRoom = dungeon.baddieRoom;
 			x = 10;
 		}
 		
@@ -168,7 +161,7 @@ public class Player {
 				sprite = hitUp;
 			else sprite = up;
 			
-			if (!dungeon.isBlocked(x, y - delta * 0.1f))
+			if (!dungeon.currentRoom.isBlocked(x, y - delta * 0.1f))
 	          {
 				if(y < (0 - (walkingDown.getHeight()/2))) //edge of screen collision detection
 					y = 0 - (walkingDown.getHeight()/2); //edge of screen collision detection
@@ -188,7 +181,7 @@ public class Player {
 				sprite = hitDown;
 			else sprite = down;
 			
-			 if (!dungeon.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
+			 if (!dungeon.currentRoom.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
              {
 				 if(y > (Zeldaesque.screenHeight - 90)) //edge of screen collision detection
 						y = Zeldaesque.screenHeight - 90; //edge of screen collision detection
@@ -208,7 +201,7 @@ public class Player {
 					sprite = hitLeft;
 				else sprite = left;
 			 
-			if (!dungeon.isBlocked(x - delta * 0.1f, y))
+			if (!dungeon.currentRoom.isBlocked(x - delta * 0.1f, y))
             {
                 sprite.update(delta);
                 x -= delta* speed;
@@ -223,7 +216,7 @@ public class Player {
 				sprite = hitRight;
 			else sprite = right;
 			
-			 if (!dungeon.isBlocked(x + sprite.getWidth() + delta * 0.1f, y))
+			 if (!dungeon.currentRoom.isBlocked(x + sprite.getWidth() + delta * 0.1f, y))
              {
                  sprite.update(delta);
                  x += delta* speed;
@@ -235,9 +228,9 @@ public class Player {
 		 
 		 
 		 
-		 for(int i = 0; i < pc.getQuiverSize(); i++	) {
+		 for(int i = 0; i < dungeon.currentRoom.pc.getQuiverSize(); i++	) {
 			 
-			 Vector2f distanceToArrow = new Vector2f(dungeon.boss.bossCenterX - ProjectileController.TempArrow.getX(), dungeon.boss.bossCenterY - pc.TempArrow.getY());
+			 Vector2f distanceToArrow = new Vector2f(dungeon.boss.bossCenterX - ProjectileController.TempArrow.getX(), dungeon.boss.bossCenterY - dungeon.currentRoom.pc.TempArrow.getY());
 //			 System.out.println("distance to arrow" + distanceToArrow);
 			 
 			 if ((distanceToArrow.x < dungeon.boss.bossCollisionRadius.x && distanceToArrow.x > -dungeon.boss.bossCollisionRadius.x) && (distanceToArrow.y < dungeon.boss.bossCollisionRadius.y && distanceToArrow.y > -dungeon.boss.bossCollisionRadius.y))
@@ -297,7 +290,7 @@ public class Player {
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			
 			if (projectileCooldown <= 0) {
-			pc.addArrow(new Arrow(x, y, this, this.playerDirection));
+			dungeon.currentRoom.pc.addArrow(new Arrow(x, y, this, this.playerDirection));
 			projectileCooldown = 300;
 			}
 			

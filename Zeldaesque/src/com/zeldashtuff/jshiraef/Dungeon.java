@@ -8,42 +8,46 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Dungeon {
 	
 	public static TiledMap room;
-	public static int currentRoom = 0;
+//	public static int currentRoom = 0;
 	
 	public Player player;
 	public Boss boss;
-	public BaddieController bc;
 	
-	private boolean[][] blocked;
+	Room currentRoom;
+	
+	Room firstRoom;
+	Room bossRoom;
+	Room baddieRoom;
+	
+	
+	
 	
 	
 	public Dungeon() throws SlickException {
-		try
-		{
-			room = new TiledMap("lvl/" + switchRoom(currentRoom) + ".tmx");
-		}
-		catch (SlickException e) 
-		{
-			System.out.println("error loading level");
-		}
+		
+		
 		
 		boss = new Boss(this);
 		player = new Player(this);
-		bc = new BaddieController();
 		
 		
-		loadRoom();
+		firstRoom = new Room("room5");
+		bossRoom = new Room("room4");
+		baddieRoom = new Room("room6");
+		
+		
+		currentRoom = firstRoom;
 		
 	}
 	
 	
 	public void render(Graphics g)	{
 		
-		room.render(0, 0);
+		currentRoom.room.render(0, 0);
 		
 		if(player.inBossRoom)
 		{
-			loadRoom();
+			bossRoom.loadRoom();
 			boss.render(g);
 		} 
 		
@@ -51,9 +55,9 @@ public class Dungeon {
 		
 		if(player.inBadRoom)
 		{
-			loadRoom();
+			
 	//		boss.render(g);
-			bc.render(g);
+			currentRoom.bc.render(g);
 		}
 		
 	}
@@ -66,13 +70,13 @@ public class Dungeon {
 		} 
 		
 		if(player.inBadRoom) {
-			bc.update(delta);
+			baddieRoom.bc.update(delta);
 		}
 		
 		if(player.inBadRoom && player.enteredNewRoom) {
-			bc.addBaddie(new Baddie(getPixelWidth(room)/3, getPixelHeight(room)/3, getPixelWidth(room)/3 + 25, getPixelHeight(room)/3 + 34, this));
-			bc.addBaddie(new Baddie(room.getWidth() * 64/2, room.getHeight()/2 * 100, (room.getWidth()/2) + 25, (room.getHeight()/3) + 34, this));
-			bc.addBaddie(new Baddie((getPixelWidth(room)/3) * 2, getPixelHeight(room)/4, (getPixelWidth(room)/3) * 2 + 25, getPixelHeight(room)/4 + 34, this));
+			baddieRoom.bc.addBaddie(new Baddie(currentRoom.getPixelWidth()/3, currentRoom.getPixelHeight()/3, currentRoom.getPixelWidth()/3 + 25, currentRoom.getPixelHeight()/3 + 34, this));
+			baddieRoom.bc.addBaddie(new Baddie(currentRoom.getPixelWidth()/2, currentRoom.getPixelHeight()/2, (currentRoom.getPixelWidth()/2) + 25, (currentRoom.getPixelHeight()/3) + 34, this));
+			baddieRoom.bc.addBaddie(new Baddie((currentRoom.getPixelWidth()/3) * 2, currentRoom.getPixelHeight()/4, (currentRoom.getPixelWidth()/3) * 2 + 25, currentRoom.getPixelHeight()/4 + 34, this));
 			player.enteredNewRoom = false;
 		}
 		
@@ -81,55 +85,9 @@ public class Dungeon {
 		
 	}
 	
-	public boolean isBlocked(float x, float y)
-	{
-		int xBlock = (int)x / room.getTileWidth();
-		int yBlock = (int)y / room.getTileHeight();
-		return blocked[xBlock][yBlock];
-	}
 	
-	public static String switchRoom(int roomNumber)
-	{
-		
-		
-		switch (roomNumber)
-		{
-		case 1 :
-			return "room5";
-		case 2 : 
-			return "room4";
-			//System.out.println("It should be room 2!");
-		case 3 : 
-			return "room6";
-		default:
-			return "room5";
-		}
-	}
 	
-	public void loadRoom() {
-		 blocked = new boolean[room.getWidth()][room.getHeight()];
-			
-			for (int xAxis=0;xAxis<room.getWidth(); xAxis++)
-	        {
-	             for (int yAxis=0;yAxis<room.getHeight(); yAxis++)
-	             {
-	                 int tileID = room.getTileId(xAxis, yAxis, 0);
-	                 String value = room.getTileProperty(tileID, "stone", "false");
-	                 if ("true".equals(value))
-	                 {
-	                     blocked[xAxis][yAxis] = true;
-	                 }
-	             }
-	         }
-	}
 	
-	public float getPixelWidth(TiledMap room) {
-		return room.getWidth() * 64;
-	}
-	
-	public float getPixelHeight(TiledMap room) {
-		return room.getHeight() * 64;
-	}
 	
 	
 
