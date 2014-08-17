@@ -78,7 +78,7 @@ public void update(int delta) {
 				
 			if (x < 450) {
 				soldier = soldierRight;
-				x += .1;
+				x += delta * .1;
 			}
 			else
 				direction = 3;
@@ -89,7 +89,7 @@ public void update(int delta) {
 
 				if (x > 200) {
 					soldier = soldierLeft;
-					x -= .1;
+					x -= delta * .1;
 				}
 				else
 					direction = 2;

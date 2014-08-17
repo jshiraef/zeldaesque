@@ -113,10 +113,11 @@ public class Player {
 		playerCenterY = y + 50;
 	
 	
-//		g.drawString(" Link's X: " + playerTileX +  "\n Link's Y: " + playerTileY, 500, 100);
+//		g.drawString(" Link's center X: " + playerCenterX +  "\n Link's center Y: " + playerCenterY, 500, 100);
+//		g.drawString(" Boss center X: " + dungeon.boss.bossCenterX +  "\n boss's center Y: " + dungeon.boss.bossCenterY, 500, 150);
 		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 400);
 		
-//		g.drawString("distance to Boss: " + distanceToBoss, 300, 600);
+		
 		
 		sprite.draw(x, y);
 		dungeon.currentRoom.pc.render(g);
@@ -128,7 +129,7 @@ public class Player {
 	
 	public void update(Input input, int delta) throws SlickException {
 		
-		dungeon.currentRoom.pc.update();
+		dungeon.currentRoom.pc.update(delta);
 		
 
 		if(y < -25)
@@ -249,7 +250,9 @@ public class Player {
 		 }
 		
 		 
-		
+//collision with enemy starts here
+		 
+		 
 		Vector2f distanceToBoss = new Vector2f (dungeon.boss.bossCenterX - playerCenterX, dungeon.boss.bossCenterY - playerCenterY);
 		
 		if((distanceToBoss.x < dungeon.boss.bossCollisionRadius.x && distanceToBoss.x > - dungeon.boss.bossCollisionRadius.x) && (distanceToBoss.y < dungeon.boss.bossCollisionRadius.y && distanceToBoss.y > - dungeon.boss.bossCollisionRadius.y)) {
@@ -258,34 +261,39 @@ public class Player {
 			Boss.angry = true;
 			Boss.direction = 1;
 			
+			if(playerDamageCooldown == 0) {
+				healthBarWidth -= 50;
+			}
 			playerDamageCooldown = 1000;
-			healthBarWidth -= 50;
+			
 
-				if(distanceToBoss.x > 35) {
+				if(distanceToBoss.x > dungeon.boss.bossCollisionRadius.x - 5) {
 					sprite = hitLeft;
 					sprite.update(delta);
-	                x -= delta * 28f;
+	                x -= delta * 33f;
 				}
 
-				if(distanceToBoss.x < -35) {
+				if(distanceToBoss.x < - dungeon.boss.bossCollisionRadius.x + 5) {
 					sprite = hitRight;
 					sprite.update(delta);
-					x += delta * 28f;
+					x += delta * 33f;
 				}
 
-				if(distanceToBoss.y > 55) {
+				if(distanceToBoss.y > dungeon.boss.bossCollisionRadius.y - 5) {
 					sprite = hitUp;
 					sprite.update(delta);
-					y -= delta * 28f;
+					y -= delta * 33f;
 				}
 
-				if(distanceToBoss.y < -55) {
+				if(distanceToBoss.y < - dungeon.boss.bossCollisionRadius.y + 5) {
 					sprite = hitDown;
 					sprite.update(delta);
-					y += delta * 28f;
+					y += delta * 33f;
 				}
 			System.out.println("Health: " + healthBarWidth);
 		}
+		
+// collision with enemy ends here
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			
@@ -298,12 +306,10 @@ public class Player {
 		
 		if(projectileCooldown > 0){
 			projectileCooldown -= delta;
-//		System.out.println("projectile cooldown " + projectileCooldown);
 		}
 		
 		if(bossDamageCooldown > 0) {
 			bossDamageCooldown -= delta;
-//			System.out.println("damage cooldown " +  bossDamageCooldown);
 		}
 		
 		if(playerDamageCooldown > 0) {

@@ -21,14 +21,14 @@ private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
 		
 	}
 	
-	public void update() {
+	public void update(int delta) {
 		 for(int i = 0; i < quiver.size(); i++) {
 			 TempArrow = quiver.get(i);
 			 
 			 if(TempArrow.getY() < 0)
 				 removeArrow(TempArrow);
 			 
-			 TempArrow.update();
+			 TempArrow.update(delta);
 		 }
 	}
 	

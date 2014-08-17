@@ -16,6 +16,9 @@ public class Arrow {
 	
 	private float x = 100;
 	private float y = 100;
+	
+	private double arrowSpeed = .7;
+	
 	private Direction direction;
 	
 	Animation projectile;
@@ -35,19 +38,19 @@ public class Arrow {
 		
 	}
 	
-	public void update() {
+	public void update(int delta) {
 		
 		if (direction == Direction.NORTH)
-			y -= 1;
+			y -= delta * arrowSpeed;
 		
 		else if(direction == Direction.SOUTH)
-			y += 1;
+			y += delta * arrowSpeed;
 		
 		else if(direction == Direction.EAST)
-			x -= 1;
+			x -= delta * arrowSpeed;
 		
 		else if(direction == Direction.WEST)
-			x += 1;
+			x += delta * arrowSpeed;
 		
 	}
 	

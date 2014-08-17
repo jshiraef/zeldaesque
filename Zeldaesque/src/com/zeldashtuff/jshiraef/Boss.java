@@ -43,7 +43,7 @@ public class Boss {
 	
 	public float bossHealth = 1, bossMaxHealth = (float) 1.5, bossHealthBarX = 100, bossHealthBarY = 100, bossHealthBarWidth = 200, bossHealthBarHeight = 10;
 	
-	Vector2f bossCollisionRadius = new Vector2f(40, 60);
+	Vector2f bossCollisionRadius = new Vector2f(40, 80);
 	
 //	public static int bossTileX;
 //	public static int bossTileY;
@@ -136,7 +136,7 @@ public class Boss {
 		case 2:
 				
 			if (x < 350)
-				x += .1;
+				x += delta * .1;
 			else
 				direction = 3;
 			
@@ -144,7 +144,7 @@ public class Boss {
 		case 3:
 
 				if (x > 200)
-					x -= .1;
+					x -= delta * .1;
 				else
 					direction = 2;
 			
