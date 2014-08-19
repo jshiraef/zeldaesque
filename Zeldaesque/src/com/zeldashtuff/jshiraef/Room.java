@@ -13,23 +13,12 @@ public class Room {
 	public BaddieController bc;
 	public ProjectileController pc;
 	
-	public Room (String roomPath) {
-		
-		try
-		{
-			room = new TiledMap("lvl/" + roomPath + ".tmx");
-		}
-		catch (SlickException e) 
-		{
-			System.out.println("error loading level");
-		}
-		
+	public Room(String roomPath) throws SlickException
+	{
 		bc = new BaddieController();
 		pc = new ProjectileController();
 		
-		
 		loadRoom();
-	
 	}
 	
 	public boolean isBlocked(float x, float y)
