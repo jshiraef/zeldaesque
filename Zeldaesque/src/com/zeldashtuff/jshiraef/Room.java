@@ -10,7 +10,6 @@ public class Room {
 	private boolean[][] blocked;
 	private boolean[][] movable;
 	
-	
 	public BaddieController bc;
 	public ProjectileController pc;
 	
