@@ -25,7 +25,7 @@ public class Player {
 	Image damagedHeroPic1 = new Image("res/damagedLinkWalking.png");
 	Image damagedHeroPic2 = new Image("res/damagedLinkWalking.png");
 	
-	Image fullLinkSpriteSheet = new Image("res/LinkSpriteSheet.png");
+	Image fullLinkSpriteSheet = new Image("res/EchoSpriteSheet.png");
 	Image damagedLink = new Image("res/damagedLinkSpriteSheet.png");
 	
 	Image gameOver = new Image("res/GameOver.png");
@@ -50,13 +50,12 @@ public class Player {
 	public float playerCenterX;
 	public float playerCenterY;
 	
-	public boolean inBossRoom = false;
-	public boolean inBadRoom = false;
+	public boolean inBossRoom, inBaddieRoom, inBlockRoom;
 	public boolean playerHit = false;
 	public boolean enteredNewRoom = false;
 	
 	public Dungeon dungeon;
-	;
+	
 	
 	public Direction playerDirection;
 	
@@ -69,6 +68,7 @@ public class Player {
 	public float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
 	
 	public Color healthBarColor = Color.red;
+	public Color textColor = Color.blue;
 	
 	
 	public Player (Dungeon dungeon) throws SlickException{
@@ -140,13 +140,19 @@ public class Player {
 			y = 600;
 		}
 		
-		if(x > 890)
+		if(x > 890 && !inBaddieRoom)
 		{
 			
-			inBadRoom = true;
+			inBaddieRoom = true;
 			enteredNewRoom = true;
 			dungeon.currentRoom = dungeon.baddieRoom;
 			x = 10;
+		}
+		
+		if (x < 10) {
+			inBlockRoom = true;
+			dungeon.currentRoom = dungeon.blockRoom;
+			x = 890;
 		}
 		
 		
@@ -230,9 +236,116 @@ public class Player {
 		playerTileY = Math.round(playerCenterY)/dungeon.currentRoom.room.getTileHeight();
 		
 
+		System.out.println("Player's tile is : " + playerTileX + " , " + playerTileY);
+		
+		 int PlayerTileTest = dungeon.currentRoom.room.getTileId(playerTileX, playerTileY, 0);
+		 System.out.println("The player TileId is: " + PlayerTileTest);
+		 
+
+		 
+		 
+		 /* enables the player to push and pull movable objects
+		  * 
+		  */
+		 
+		 if(input.isKeyDown(Input.KEY_G))
+			{
+// logic for pushing blocks up
+				if((dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 1, 0) == 4 || dungeon.currentRoom.room.getTileId(playerTileX,  playerTileY - 1,  0) == 7) && input.isKeyDown(Input.KEY_UP) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 2))
+				{
+					if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 5 )
+					{
+						dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 2, 0, 6);
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX , playerTileY - 1, 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 1, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 1, 0, 6);
+					}
+					else if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 6)
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 2, 0, 7);
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX , playerTileY - 1, 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 1, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 1, 0, 6);	
+						}
+						else 
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 2, 0, 4);
+							dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 1, 0, 1);
+						}
+				}
+// logic for pushing blocks down
+				if((dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 1, 0) == 4 || dungeon.currentRoom.room.getTileId(playerTileX,  playerTileY + 1,  0) == 7) && input.isKeyDown(Input.KEY_DOWN) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 2))
+				{
+					if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 5 )
+					{
+						dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 2, 0, 6);
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX , playerTileY + 1, 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 1, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 1, 0, 6);
+					}
+					else if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 6)
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 2, 0, 7);
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX , playerTileY + 1, 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 1, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 1, 0, 6);	
+						}
+						else 
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 2, 0, 4);
+							dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 1, 0, 1);
+						}
+				}
+// logic for pushing blocks left
+				if((dungeon.currentRoom.room.getTileId(playerTileX - 1, playerTileY, 0) == 4  || dungeon.currentRoom.room.getTileId(playerTileX - 1,  playerTileY,  0) == 7) && input.isKeyDown(Input.KEY_LEFT) && !(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY , 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY , 0) == 2))
+				{
+					if(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY, 0) == 5 )
+					{
+						dungeon.currentRoom.room.setTileId(playerTileX - 2, playerTileY, 0, 6);
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX - 1, playerTileY, 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX - 1, playerTileY, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX - 1, playerTileY, 0, 6);
+					}
+					else if(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY, 0) == 6)
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX - 2, playerTileY, 0, 7);
+							dungeon.currentRoom.room.setTileId(playerTileX- 1, playerTileY, 0, 1);	
+						}
+						else 
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX - 2, playerTileY, 0, 4);
+							dungeon.currentRoom.room.setTileId(playerTileX - 1, playerTileY, 0, 1);
+						}
+				
+				}
+// logic for pushing blocks right
+				if((dungeon.currentRoom.room.getTileId(playerTileX + 1, playerTileY, 0) == 4  || dungeon.currentRoom.room.getTileId(playerTileX + 1,  playerTileY,  0) == 7) && input.isKeyDown(Input.KEY_RIGHT) && !(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY , 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY , 0) == 2))
+				{
+					if(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY, 0) == 5 )
+					{
+						dungeon.currentRoom.room.setTileId(playerTileX + 2, playerTileY, 0, 6);
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX + 1, playerTileY, 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX + 1, playerTileY, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX + 1, playerTileY, 0, 6);
+					}
+					else if(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY, 0) == 6)
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX + 2, playerTileY, 0, 7);
+							dungeon.currentRoom.room.setTileId(playerTileX + 1, playerTileY, 0, 1);	
+						}
+						else 
+						{
+							dungeon.currentRoom.room.setTileId(playerTileX + 2, playerTileY, 0, 4);
+							dungeon.currentRoom.room.setTileId(playerTileX + 1, playerTileY, 0, 1);
+						}
+				}
+			}
 		 
 		 
 		 
+		 /* 
+		  * boss collision with projectiles
+		  */
 		 
 		 for(int i = 0; i < dungeon.currentRoom.pc.getQuiverSize(); i++	) {
 			 
@@ -254,6 +367,7 @@ public class Player {
 		 		
 		 }
 		
+		 
 		 
 //collision with enemy starts here
 		 
@@ -300,6 +414,8 @@ public class Player {
 		
 // collision with enemy ends here
 		
+		
+		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			
 			if (projectileCooldown <= 0) {
@@ -327,6 +443,13 @@ public class Player {
 			playerHit = false;
 			
 	}
+	
+	// end of update method
+	
+	
+	
+	
+	
 	
 	public void playerDeath() {
 		gameOver.drawFlash(960/4, 704/5);

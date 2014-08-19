@@ -1,5 +1,6 @@
 package com.zeldashtuff.jshiraef;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -18,6 +19,7 @@ public class Dungeon {
 	Room firstRoom;
 	Room bossRoom;
 	Room baddieRoom;
+	Room blockRoom;
 	
 	
 	
@@ -34,6 +36,7 @@ public class Dungeon {
 		firstRoom = new Room("room5");
 		bossRoom = new Room("room4");
 		baddieRoom = new Room("room6");
+		blockRoom = new Room("MovableBlockRoom");
 		
 		
 		currentRoom = firstRoom;
@@ -53,11 +56,18 @@ public class Dungeon {
 		
 		player.render(g);
 		
-		if(player.inBadRoom)
+		if(player.inBaddieRoom)
 		{
 			
 	//		boss.render(g);
 			currentRoom.bc.render(g);
+		}
+		
+		if(player.inBlockRoom)
+		{
+			blockRoom.loadRoom();
+			g.setColor(Color.white);
+			g.drawString("use G to grab and move blocks!", 300, 100);
 		}
 		
 	}
@@ -69,11 +79,11 @@ public class Dungeon {
 			boss.update(delta);
 		} 
 		
-		if(player.inBadRoom) {
+		if(player.inBaddieRoom) {
 			baddieRoom.bc.update(delta);
 		}
 		
-		if(player.inBadRoom && player.enteredNewRoom) {
+		if(player.inBaddieRoom && player.enteredNewRoom) {
 			baddieRoom.bc.addBaddie(new Baddie(currentRoom.getPixelWidth()/3, currentRoom.getPixelHeight()/3, currentRoom.getPixelWidth()/3 + 25, currentRoom.getPixelHeight()/3 + 34, this));
 			baddieRoom.bc.addBaddie(new Baddie(currentRoom.getPixelWidth()/2, currentRoom.getPixelHeight()/2, (currentRoom.getPixelWidth()/2) + 25, (currentRoom.getPixelHeight()/3) + 34, this));
 			baddieRoom.bc.addBaddie(new Baddie((currentRoom.getPixelWidth()/3) * 2, currentRoom.getPixelHeight()/4, (currentRoom.getPixelWidth()/3) * 2 + 25, currentRoom.getPixelHeight()/4 + 34, this));

@@ -8,6 +8,7 @@ public class Room {
 	TiledMap room;
 	
 	private boolean[][] blocked;
+	private boolean[][] movable;
 	
 	
 	public BaddieController bc;
@@ -39,19 +40,33 @@ public class Room {
 		return blocked[xBlock][yBlock];
 	}
 	
+	public boolean isMovable(float x, float y)
+	{
+		int xBlock = (int) x/ room.getTileWidth();
+		int yBlock = (int) y/ room.getTileHeight();
+		return movable [xBlock][yBlock];
+	}
+	
 	
 	public void loadRoom() {
 		 blocked = new boolean[room.getWidth()][room.getHeight()];
+		 movable = new boolean[room.getWidth()][room.getHeight()];
 			
 			for (int xAxis=0;xAxis<room.getWidth(); xAxis++)
 	        {
 	             for (int yAxis=0;yAxis<room.getHeight(); yAxis++)
 	             {
 	                 int tileID = room.getTileId(xAxis, yAxis, 0);
-	                 String value = room.getTileProperty(tileID, "stone", "false");
-	                 if ("true".equals(value))
+	                 String blockedValue = room.getTileProperty(tileID, "stone", "false");
+	                 if ("true".equals(blockedValue))
 	                 {
 	                     blocked[xAxis][yAxis] = true;
+	                 }
+	                 
+	                 String movableValue = room.getTileProperty(tileID, "movableBox", "false");
+	                 if ("true".equals(movableValue))
+	                 {
+	                	 movable[xAxis][yAxis] = true;
 	                 }
 	             }
 	         }

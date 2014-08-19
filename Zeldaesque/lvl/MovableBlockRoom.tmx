@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="15" height="11" tilewidth="64" tileheight="64">
- <tileset firstgid="1" name="more grass" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="grassTiles" tilewidth="64" tileheight="64">
   <image source="../res/grassTiles.png" width="704" height="448"/>
   <tile id="1">
+   <properties>
+    <property name="stone" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="movableBox" value="true"/>
+    <property name="stone" value="true"/>
+   </properties>
+  </tile>
+  <tile id="6">
    <properties>
     <property name="stone" value="true"/>
    </properties>
@@ -10,7 +21,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="15" height="11">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NiYGBgwoIZkTA2eWzqiMWDRS+IzYyE8ZlLiV5GKuslNg7IDSdq6KUEAwC1Efj5lAIAAA==
+   H4sIAAAAAAAAC2NiYGBgIhMzUoBZoZgUPSxQjK6XBQdNjF5K3EyMvbTwLyl6KYkjSjC5aQqEAZWX5g6UAgAA
   </data>
  </layer>
 </map>
