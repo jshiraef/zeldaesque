@@ -80,6 +80,8 @@ public class Dungeon {
 			player.enteredNewRoom = false;
 		}
 		
+//		System.out.println("Tile ID: " room.getTileID());
+		
 		player.update(container.getInput(), delta);
 		
 		

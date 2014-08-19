@@ -162,7 +162,7 @@ public class Player {
 				sprite = hitUp;
 			else sprite = up;
 			
-			if (!dungeon.currentRoom.isBlocked(x, y - delta * 0.1f))
+			if (!dungeon.currentRoom.isBlocked(playerCenterX, playerCenterY - sprite.getHeight()/3 - delta * 0.1f))
 	          {
 				if(y < (0 - (walkingDown.getHeight()/2))) //edge of screen collision detection
 					y = 0 - (walkingDown.getHeight()/2); //edge of screen collision detection
@@ -182,7 +182,7 @@ public class Player {
 				sprite = hitDown;
 			else sprite = down;
 			
-			 if (!dungeon.currentRoom.isBlocked(x, y + sprite.getHeight() + delta * 0.1f))
+			 if (!dungeon.currentRoom.isBlocked(playerCenterX, playerCenterY + sprite.getHeight()/3 + delta * 0.1f))
              {
 				 if(y > (Zeldaesque.screenHeight - 90)) //edge of screen collision detection
 						y = Zeldaesque.screenHeight - 90; //edge of screen collision detection
@@ -202,7 +202,7 @@ public class Player {
 					sprite = hitLeft;
 				else sprite = left;
 			 
-			if (!dungeon.currentRoom.isBlocked(x - delta * 0.1f, y))
+			if (!dungeon.currentRoom.isBlocked(playerCenterX - sprite.getWidth()/3- delta * 0.1f, playerCenterY))
             {
                 sprite.update(delta);
                 x -= delta* speed;
@@ -217,15 +217,20 @@ public class Player {
 				sprite = hitRight;
 			else sprite = right;
 			
-			 if (!dungeon.currentRoom.isBlocked(x + sprite.getWidth() + delta * 0.1f, y))
+			 if (!dungeon.currentRoom.isBlocked(playerCenterX + sprite.getWidth()/3 + delta * 0.1f, playerCenterY))
              {
                  sprite.update(delta);
-                 x += delta* speed;
+                 x += delta * speed;
              }
 		}
+		 
+		 
 		
-//		playerTileX = Math.round(x)/dungeon.room.getTileWidth();
-//		playerTileY = Math.round(y)/dungeon.room.getTileHeight();
+		playerTileX = Math.round(playerCenterX)/dungeon.currentRoom.room.getTileWidth();
+		playerTileY = Math.round(playerCenterY)/dungeon.currentRoom.room.getTileHeight();
+		
+
+		 
 		 
 		 
 		 
@@ -317,7 +322,9 @@ public class Player {
 			playerDamageCooldown -= delta;
 			System.out.println("Player damage cooldown " +  playerDamageCooldown);
 		}
-		else playerHit = false;
+
+		if(playerDamageCooldown == 0)
+			playerHit = false;
 			
 	}
 	
