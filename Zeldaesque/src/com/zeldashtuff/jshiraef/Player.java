@@ -480,6 +480,5 @@ public class Player {
 		this.y = y;
 	}
 	
-
-
 }
+

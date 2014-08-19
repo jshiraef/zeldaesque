@@ -15,6 +15,8 @@ public class Room {
 	
 	public Room(String roomPath) throws SlickException
 	{
+		
+		
 		bc = new BaddieController();
 		pc = new ProjectileController();
 		
@@ -37,9 +39,7 @@ public class Room {
 		return movable [tileX][tileY];
 	}
 	
-	
-	public void loadRoom()
-	{
+	public void loadRoom() {
 		 blocked = new boolean[room.getWidth()][room.getHeight()];
 		 movable = new boolean[room.getWidth()][room.getHeight()];
 			
