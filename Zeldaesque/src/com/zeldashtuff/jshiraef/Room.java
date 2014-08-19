@@ -20,6 +20,8 @@ public class Room {
 		bc = new BaddieController();
 		pc = new ProjectileController();
 		
+		room = new TiledMap("lvl/" + roomPath + ".tmx");
+		
 		loadRoom();
 	}
 	
@@ -36,7 +38,6 @@ public class Room {
 		int tileY = (int) y/ room.getTileHeight();
 		return movable [tileX][tileY];
 	}
-	
 	
 	public void loadRoom() {
 		 blocked = new boolean[room.getWidth()][room.getHeight()];
