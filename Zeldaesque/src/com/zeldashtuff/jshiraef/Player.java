@@ -67,8 +67,8 @@ public class Player {
 	
 	public float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
 	
-	public Color healthBarColor = Color.yellow;
-	public Color textColor = Color.white;
+	public Color healthBarColor = Color.red;
+	public Color textColor = Color.blue;
 	
 	
 	public Player (Dungeon dungeon) throws SlickException{
@@ -480,6 +480,5 @@ public class Player {
 		this.y = y;
 	}
 	
-
-
 }
+
