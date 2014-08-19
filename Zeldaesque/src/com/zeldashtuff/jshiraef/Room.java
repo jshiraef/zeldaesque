@@ -34,9 +34,9 @@ public class Room {
 	
 	public boolean isBlocked(float x, float y)
 	{
-		int xBlock = (int)x / room.getTileWidth();
-		int yBlock = (int)y / room.getTileHeight();
-		return blocked[xBlock][yBlock];
+		int tileX = (int)x / room.getTileWidth();
+		int tileY = (int)y / room.getTileHeight();
+		return blocked[tileX][tileY];
 	}
 	
 	public boolean isMovable(float x, float y)
