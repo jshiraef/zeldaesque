@@ -41,9 +41,9 @@ public class Room {
 	
 	public boolean isMovable(float x, float y)
 	{
-		int xBlock = (int) x/ room.getTileWidth();
-		int yBlock = (int) y/ room.getTileHeight();
-		return movable [xBlock][yBlock];
+		int tileX = (int) x/ room.getTileWidth();
+		int tileY = (int) y/ room.getTileHeight();
+		return movable [tileX][tileY];
 	}
 	
 	
