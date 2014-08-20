@@ -17,7 +17,7 @@ public class Player {
 	
 	
 
-	static Animation sprite, up, down, left, right, hit, hitDown, hitUp, hitRight, hitLeft; //redundant variables?
+	static Animation sprite, up, down, left, right, hit, hitDown, hitUp, hitRight, hitLeft, idleDown, idleUp, idleLeft, idleRight, pushDown, pushUp, pushLeft, pushRight; //redundant variables?
 
 
 	
@@ -25,20 +25,28 @@ public class Player {
 	Image damagedHeroPic1 = new Image("res/damagedLinkWalking.png");
 	Image damagedHeroPic2 = new Image("res/damagedLinkWalking.png");
 	
-	Image fullLinkSpriteSheet = new Image("res/EchoSpriteSheet.png");
+	Image fullEckoSpriteSheet = new Image("res/EckoSpriteSheet.png");
+	Image fullEckoPushing = new Image("res/EckoPushingSpriteSheet.png");
 	Image damagedLink = new Image("res/damagedLinkSpriteSheet.png");
 	
 	Image gameOver = new Image("res/GameOver.png");
+	
+	Image walkingDown = fullEckoSpriteSheet.getSubImage(1, 1, 199, 82);
+	Image walkingLeft = fullEckoSpriteSheet.getSubImage(1, 94, 199, 84);
+	Image walkingRight = fullEckoSpriteSheet.getSubImage(1, 178, 199, 84);
+	Image walkingUp = fullEckoSpriteSheet.getSubImage(1, 263, 199, 82);
+	
+	
+	Image pushingRight = fullEckoPushing.getSubImage(1, 1, 199, 84);
+	Image pushingLeft = fullEckoPushing.getSubImage(1, 86, 199, 84);
+	Image pushingUp = fullEckoPushing.getSubImage(1, 171, 199, 84);
+	Image pushingDown = fullEckoPushing.getSubImage(1, 255, 199, 84);
 	
 	Image damagedDown = damagedLink.getSubImage(1, 1, 199, 84);
 	Image damagedLeft = damagedLink.getSubImage(1, 86, 199, 84);
 	Image damagedRight = damagedLink.getSubImage(1, 171, 199, 84);
 	Image damagedUp = damagedLink.getSubImage(1, 255, 199, 84);
 	
-	Image walkingDown = fullLinkSpriteSheet.getSubImage(1, 1, 199, 84);
-	Image walkingLeft = fullLinkSpriteSheet.getSubImage(1, 86, 199, 84);
-	Image walkingRight = fullLinkSpriteSheet.getSubImage(1, 171, 199, 84);
-	Image walkingUp = fullLinkSpriteSheet.getSubImage(1, 255, 199, 84);
 	
 	public float x = 64f;
 	public float y = 64f;
@@ -53,6 +61,8 @@ public class Player {
 	public boolean inBossRoom, inBaddieRoom, inBlockRoom;
 	public boolean playerHit = false;
 	public boolean enteredNewRoom = false;
+	
+	public boolean directionKeyPressed = false;
 	
 	public Dungeon dungeon;
 	
@@ -83,10 +93,23 @@ public class Player {
 //		Image[] damaged = {damagedHeroPic1, heroPic1, damagedHeroPic2, heroPic2};
 	
 		
-		this.down = new Animation(new SpriteSheet(walkingDown, 49, 84), 250);
-		this.up = new Animation(new SpriteSheet(walkingUp, 49, 84), 250);
+		this.down = new Animation(new SpriteSheet(walkingDown, 49, 82), 250);
+		this.up = new Animation(new SpriteSheet(walkingUp, 49, 82), 250);
 		this.left = new Animation(new SpriteSheet(walkingLeft, 49, 84), 250);
 		this.right = new Animation(new SpriteSheet(walkingRight, 49, 84), 250);
+		
+		this.pushDown = new Animation(new SpriteSheet(pushingDown, 49, 84), 250);
+		this.pushUp = new Animation(new SpriteSheet(pushingUp, 49, 84), 250);
+		this.pushRight = new Animation(new SpriteSheet(pushingRight, 49, 84), 250);
+		this.pushLeft = new Animation(new SpriteSheet(pushingLeft, 49, 84), 250);
+		
+		
+		
+		
+		this.idleDown = new Animation(new SpriteSheet(down.getImage(0), 49, 82), 1000);
+		this.idleUp = new Animation(new SpriteSheet(up.getImage(0), 49, 82), 1000);
+		this.idleLeft = new Animation(new SpriteSheet(left.getImage(0), 49, 84), 1000);
+		this.idleRight = new Animation(new SpriteSheet(right.getImage(1), 49, 84), 1000);
 		
 		
 		hitDown = new Animation(new SpriteSheet(damagedDown, 49, 84), 250);
@@ -95,7 +118,7 @@ public class Player {
 		hitRight = new Animation(new SpriteSheet(damagedRight, 49, 84), 250);
 		
 		
-		sprite = down; 
+		sprite = idleDown; 
 		
 	}
 	
@@ -115,7 +138,7 @@ public class Player {
 	
 //		g.drawString(" Link's center X: " + playerCenterX +  "\n Link's center Y: " + playerCenterY, 500, 100);
 //		g.drawString(" Boss center X: " + dungeon.boss.bossCenterX +  "\n boss's center Y: " + dungeon.boss.bossCenterY, 500, 150);
-		g.drawString(" Link's X: " + x +  "\n Link's Y: " + y, 500, 400);
+		g.drawString(" Ecko's X: " + x +  "\n Ecko's Y: " + y, 500, 400);
 		
 		
 		
@@ -128,6 +151,8 @@ public class Player {
 	
 	
 	public void update(Input input, int delta) throws SlickException {
+		
+		directionKeyPressed = false;
 		
 		dungeon.currentRoom.pc.update(delta);
 		
@@ -162,6 +187,7 @@ public class Player {
 		
 		if (input.isKeyDown(Input.KEY_UP))
 		{
+			directionKeyPressed = true;
 			playerDirection = Direction.NORTH;
 			
 			if(playerHit)
@@ -176,12 +202,13 @@ public class Player {
                 sprite.update(delta);
                 y -= delta* speed;
 				}
+				
             }
 		}
 		
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
-			
+			directionKeyPressed = true;
 			playerDirection = Direction.SOUTH;
 			
 			if(playerHit)
@@ -202,6 +229,7 @@ public class Player {
 		
 		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
+			 directionKeyPressed = true;
 			 playerDirection = Direction.EAST;
 
 			 if(playerHit)
@@ -217,6 +245,7 @@ public class Player {
 		 
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
+			directionKeyPressed = true;
 			playerDirection = Direction.WEST;
 			
 			if(playerHit)
@@ -229,6 +258,16 @@ public class Player {
                  x += delta * speed;
              }
 		}
+		 
+		 // player idles if not moving
+		 if (playerDirection == Direction.NORTH && !directionKeyPressed)
+			 sprite = idleUp;
+		 if (playerDirection == Direction.SOUTH && !directionKeyPressed)
+			 sprite = idleDown;
+		 if (playerDirection == Direction.EAST && !directionKeyPressed)
+			 sprite = idleLeft;
+		 if (playerDirection == Direction.WEST && !directionKeyPressed)
+			 sprite = idleRight;
 		 
 		 
 		
@@ -253,6 +292,7 @@ public class Player {
 // logic for pushing blocks up
 				if((dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 1, 0) == 4 || dungeon.currentRoom.room.getTileId(playerTileX,  playerTileY - 1,  0) == 7) && input.isKeyDown(Input.KEY_UP) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 2))
 				{
+					sprite = pushUp;
 					if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 2, 0, 6);
@@ -276,6 +316,7 @@ public class Player {
 // logic for pushing blocks down
 				if((dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 1, 0) == 4 || dungeon.currentRoom.room.getTileId(playerTileX,  playerTileY + 1,  0) == 7) && input.isKeyDown(Input.KEY_DOWN) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 2))
 				{
+					sprite = pushDown;
 					if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 2, 0, 6);
@@ -299,6 +340,7 @@ public class Player {
 // logic for pushing blocks left
 				if((dungeon.currentRoom.room.getTileId(playerTileX - 1, playerTileY, 0) == 4  || dungeon.currentRoom.room.getTileId(playerTileX - 1,  playerTileY,  0) == 7) && input.isKeyDown(Input.KEY_LEFT) && !(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY , 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY , 0) == 2))
 				{
+					sprite = pushLeft;
 					if(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX - 2, playerTileY, 0, 6);
@@ -309,7 +351,9 @@ public class Player {
 					else if(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY, 0) == 6)
 						{
 							dungeon.currentRoom.room.setTileId(playerTileX - 2, playerTileY, 0, 7);
-							dungeon.currentRoom.room.setTileId(playerTileX- 1, playerTileY, 0, 1);	
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX - 1 , playerTileY, 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX - 1, playerTileY, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX - 1, playerTileY, 0, 6);
 						}
 						else 
 						{
@@ -321,6 +365,7 @@ public class Player {
 // logic for pushing blocks right
 				if((dungeon.currentRoom.room.getTileId(playerTileX + 1, playerTileY, 0) == 4  || dungeon.currentRoom.room.getTileId(playerTileX + 1,  playerTileY,  0) == 7) && input.isKeyDown(Input.KEY_RIGHT) && !(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY , 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY , 0) == 2))
 				{
+					sprite = pushRight;
 					if(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX + 2, playerTileY, 0, 6);
@@ -331,7 +376,9 @@ public class Player {
 					else if(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY, 0) == 6)
 						{
 							dungeon.currentRoom.room.setTileId(playerTileX + 2, playerTileY, 0, 7);
-							dungeon.currentRoom.room.setTileId(playerTileX + 1, playerTileY, 0, 1);	
+							if (!(dungeon.currentRoom.room.getTileId(playerTileX + 1, playerTileY , 0) == 7))
+								dungeon.currentRoom.room.setTileId(playerTileX + 1, playerTileY, 0, 1);
+							else dungeon.currentRoom.room.setTileId(playerTileX + 1, playerTileY, 0, 6);
 						}
 						else 
 						{
@@ -340,6 +387,16 @@ public class Player {
 						}
 				}
 			}
+		 
+		 if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_UP))
+			 sprite = pushUp;
+		 else if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_DOWN))
+			 sprite = pushDown;
+		 if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_RIGHT))
+			 sprite = pushRight;
+		 else if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_LEFT))
+			 sprite = pushLeft;
+		 
 		 
 		 
 		 
@@ -460,7 +517,7 @@ public class Player {
 		float healthScale = health/maxHealth;
 		g.setColor(healthBarColor);
 		g.fillRect(healthBarX, healthBarY, healthBarWidth * healthScale, healthBarHeight);
-		g.drawString("Link's HP", healthBarX, healthBarY - 20);
+		g.drawString("Ecko's HP", healthBarX, healthBarY - 20);
 	}
 
 	
