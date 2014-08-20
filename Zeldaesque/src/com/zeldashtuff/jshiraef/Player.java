@@ -230,7 +230,7 @@ public class Player {
 		 if (input.isKeyDown(Input.KEY_LEFT))
 		{
 			 directionKeyPressed = true;
-			 playerDirection = Direction.EAST;
+			 playerDirection = Direction.WEST;
 
 			 if(playerHit)
 					sprite = hitLeft;
@@ -246,7 +246,7 @@ public class Player {
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
 			directionKeyPressed = true;
-			playerDirection = Direction.WEST;
+			playerDirection = Direction.EAST;
 			
 			if(playerHit)
 				sprite = hitRight;
@@ -265,9 +265,9 @@ public class Player {
 		 if (playerDirection == Direction.SOUTH && !directionKeyPressed)
 			 sprite = idleDown;
 		 if (playerDirection == Direction.EAST && !directionKeyPressed)
-			 sprite = idleLeft;
-		 if (playerDirection == Direction.WEST && !directionKeyPressed)
 			 sprite = idleRight;
+		 if (playerDirection == Direction.WEST && !directionKeyPressed)
+			 sprite = idleLeft;
 		 
 		 
 		
@@ -292,7 +292,6 @@ public class Player {
 // logic for pushing blocks up
 				if((dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 1, 0) == 4 || dungeon.currentRoom.room.getTileId(playerTileX,  playerTileY - 1,  0) == 7) && input.isKeyDown(Input.KEY_UP) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 2))
 				{
-					sprite = pushUp;
 					if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY - 2, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX, playerTileY - 2, 0, 6);
@@ -316,7 +315,6 @@ public class Player {
 // logic for pushing blocks down
 				if((dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 1, 0) == 4 || dungeon.currentRoom.room.getTileId(playerTileX,  playerTileY + 1,  0) == 7) && input.isKeyDown(Input.KEY_DOWN) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 2))
 				{
-					sprite = pushDown;
 					if(dungeon.currentRoom.room.getTileId(playerTileX, playerTileY + 2, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX, playerTileY + 2, 0, 6);
@@ -340,7 +338,6 @@ public class Player {
 // logic for pushing blocks left
 				if((dungeon.currentRoom.room.getTileId(playerTileX - 1, playerTileY, 0) == 4  || dungeon.currentRoom.room.getTileId(playerTileX - 1,  playerTileY,  0) == 7) && input.isKeyDown(Input.KEY_LEFT) && !(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY , 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY , 0) == 2))
 				{
-					sprite = pushLeft;
 					if(dungeon.currentRoom.room.getTileId(playerTileX - 2, playerTileY, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX - 2, playerTileY, 0, 6);
@@ -365,7 +362,6 @@ public class Player {
 // logic for pushing blocks right
 				if((dungeon.currentRoom.room.getTileId(playerTileX + 1, playerTileY, 0) == 4  || dungeon.currentRoom.room.getTileId(playerTileX + 1,  playerTileY,  0) == 7) && input.isKeyDown(Input.KEY_RIGHT) && !(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY , 0) == 4) && !(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY , 0) == 2))
 				{
-					sprite = pushRight;
 					if(dungeon.currentRoom.room.getTileId(playerTileX + 2, playerTileY, 0) == 5 )
 					{
 						dungeon.currentRoom.room.setTileId(playerTileX + 2, playerTileY, 0, 6);
@@ -388,13 +384,13 @@ public class Player {
 				}
 			}
 		 
-		 if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_UP))
+		 if (input.isKeyDown(Input.KEY_G) && playerDirection == Direction.NORTH)
 			 sprite = pushUp;
-		 else if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_DOWN))
+		 else if (input.isKeyDown(Input.KEY_G) && playerDirection == Direction.SOUTH)
 			 sprite = pushDown;
-		 if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_RIGHT))
+		 if (input.isKeyDown(Input.KEY_G) && playerDirection == Direction.EAST)
 			 sprite = pushRight;
-		 else if (input.isKeyDown(Input.KEY_G) && input.isKeyDown(Input.KEY_LEFT))
+		 else if (input.isKeyDown(Input.KEY_G) && playerDirection == Direction.WEST)
 			 sprite = pushLeft;
 		 
 		 

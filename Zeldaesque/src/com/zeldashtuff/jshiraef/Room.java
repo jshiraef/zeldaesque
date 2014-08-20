@@ -16,7 +16,6 @@ public class Room {
 	public Room(String roomPath) throws SlickException
 	{
 		
-		
 		bc = new BaddieController();
 		pc = new ProjectileController();
 		
