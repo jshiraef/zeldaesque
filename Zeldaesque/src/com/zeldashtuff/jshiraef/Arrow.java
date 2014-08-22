@@ -46,10 +46,10 @@ public class Arrow {
 		else if(direction == Direction.SOUTH)
 			y += delta * arrowSpeed;
 		
-		else if(direction == Direction.EAST)
+		else if(direction == Direction.WEST)
 			x -= delta * arrowSpeed;
 		
-		else if(direction == Direction.WEST)
+		else if(direction == Direction.EAST)
 			x += delta * arrowSpeed;
 		
 	}
