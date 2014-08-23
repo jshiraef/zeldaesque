@@ -22,7 +22,7 @@ public class Boss {
 	
 	public Dungeon dungeon;
 	
-	public boolean hit = false;
+	public static boolean hit = false;
 	public boolean dead = false;
 	
 	public boolean destroyed = false;

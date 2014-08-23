@@ -24,17 +24,19 @@ public class Arrow {
 	Animation projectile;
 	
 	public boolean loaded = false;
+	public boolean arrowHit = false;
 
 	Image arrows = new Image("res/arrowSpriteSheet.png");
 	
 	Image arrow = arrows.getSubImage(1, 1, 30, 30);
 	
 	
-	public Arrow(float x, float y, Player player, Direction direction) throws SlickException {
+	public Arrow(float x, float y, Player player, Direction direction, boolean arrowHit) throws SlickException {
 		
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
+		this.arrowHit = false;
 		
 	}
 	
@@ -52,10 +54,14 @@ public class Arrow {
 		else if(direction == Direction.EAST)
 			x += delta * arrowSpeed;
 		
+		if(Boss.hit == true)
+			arrowHit = true;
+		
 	}
 	
 	public void render(Graphics g) {
 		
+		if(!arrowHit)
 		arrow.draw((float)x, (float)y);
 		
 	}

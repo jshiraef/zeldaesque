@@ -8,7 +8,7 @@ import org.lwjgl.*;
 
 public class Zeldaesque extends BasicGame
 {
-	public static final String gameName = "Zelder Clone";
+	public static final String gameName = "Project Ecko";
 	public static AppGameContainer appgc;
 	
 	

@@ -18,23 +18,17 @@ public class Player {
 	
 
 	static Animation sprite, up, down, left, right, hit, hitDown, hitUp, hitRight, hitLeft, idleDown, idleUp, idleLeft, idleRight, pushDown, pushUp, pushLeft, pushRight; //redundant variables?
-
-
 	
-	
-	Image damagedHeroPic1 = new Image("res/damagedLinkWalking.png");
-	Image damagedHeroPic2 = new Image("res/damagedLinkWalking.png");
-	
-	Image fullEckoSpriteSheet = new Image("res/EckoSpriteSheet.png");
+	Image fullEckoSpriteSheet = new Image("res/EckoSpriteSheet2.png");
 	Image fullEckoPushing = new Image("res/EckoPushingSpriteSheet.png");
-	Image damagedLink = new Image("res/damagedLinkSpriteSheet.png");
+	Image damagedEcko = new Image("res/damagedEckoSpriteSheet.png");
 	
 	Image gameOver = new Image("res/GameOver.png");
 	
-	Image walkingDown = fullEckoSpriteSheet.getSubImage(1, 1, 199, 82);
-	Image walkingLeft = fullEckoSpriteSheet.getSubImage(1, 94, 199, 84);
-	Image walkingRight = fullEckoSpriteSheet.getSubImage(1, 178, 199, 84);
-	Image walkingUp = fullEckoSpriteSheet.getSubImage(1, 263, 199, 82);
+	Image walkingDown = fullEckoSpriteSheet.getSubImage(1, 1, 240, 104);
+	Image walkingLeft = fullEckoSpriteSheet.getSubImage(1, 104, 240, 104);
+	Image walkingRight = fullEckoSpriteSheet.getSubImage(1, 208, 240, 104);
+	Image walkingUp = fullEckoSpriteSheet.getSubImage(1, 312, 240, 104);
 	
 	
 	Image pushingRight = fullEckoPushing.getSubImage(1, 1, 199, 84);
@@ -42,10 +36,10 @@ public class Player {
 	Image pushingUp = fullEckoPushing.getSubImage(1, 171, 199, 84);
 	Image pushingDown = fullEckoPushing.getSubImage(1, 255, 199, 84);
 	
-	Image damagedDown = damagedLink.getSubImage(1, 1, 199, 84);
-	Image damagedLeft = damagedLink.getSubImage(1, 86, 199, 84);
-	Image damagedRight = damagedLink.getSubImage(1, 171, 199, 84);
-	Image damagedUp = damagedLink.getSubImage(1, 255, 199, 84);
+	Image damagedDown = damagedEcko.getSubImage(1, 1, 199, 84);
+	Image damagedLeft = damagedEcko.getSubImage(1, 86, 199, 84);
+	Image damagedRight = damagedEcko.getSubImage(1, 171, 199, 84);
+	Image damagedUp = damagedEcko.getSubImage(1, 255, 199, 84);
 	
 	
 	public float x = 64f;
@@ -87,16 +81,12 @@ public class Player {
 		int[] damageDuration = {150, 150, 150, 150};
 		
 		this.dungeon = dungeon;
-		
-		
-		Image[] movementDown = {new Image("res/linkWalking.png"), new Image("res/linkWalking2.png")};
-//		Image[] damaged = {damagedHeroPic1, heroPic1, damagedHeroPic2, heroPic2};
 	
 		
-		this.down = new Animation(new SpriteSheet(walkingDown, 49, 82), 250);
-		this.up = new Animation(new SpriteSheet(walkingUp, 49, 82), 250);
-		this.left = new Animation(new SpriteSheet(walkingLeft, 49, 84), 250);
-		this.right = new Animation(new SpriteSheet(walkingRight, 49, 84), 250);
+		this.down = new Animation(new SpriteSheet(walkingDown, 60, 104), 250);
+		this.up = new Animation(new SpriteSheet(walkingUp, 60, 104), 250);
+		this.left = new Animation(new SpriteSheet(walkingLeft, 60, 104), 250);
+		this.right = new Animation(new SpriteSheet(walkingRight, 60, 104), 250);
 		
 		this.pushDown = new Animation(new SpriteSheet(pushingDown, 49, 84), 250);
 		this.pushUp = new Animation(new SpriteSheet(pushingUp, 49, 84), 250);
@@ -106,10 +96,10 @@ public class Player {
 		
 		
 		
-		this.idleDown = new Animation(new SpriteSheet(down.getImage(0), 49, 82), 1000);
-		this.idleUp = new Animation(new SpriteSheet(up.getImage(0), 49, 82), 1000);
-		this.idleLeft = new Animation(new SpriteSheet(left.getImage(0), 49, 84), 1000);
-		this.idleRight = new Animation(new SpriteSheet(right.getImage(1), 49, 84), 1000);
+		this.idleDown = new Animation(new SpriteSheet(down.getImage(0), 60, 104), 1000);
+		this.idleUp = new Animation(new SpriteSheet(up.getImage(0), 60, 104), 1000);
+		this.idleLeft = new Animation(new SpriteSheet(left.getImage(0), 60, 104), 1000);
+		this.idleRight = new Animation(new SpriteSheet(right.getImage(1), 60, 104), 1000);
 		
 		
 		hitDown = new Animation(new SpriteSheet(damagedDown, 49, 84), 250);
@@ -132,8 +122,8 @@ public class Player {
 		
 		drawHealthBar(g);
 		
-		playerCenterX = x + 25;
-		playerCenterY = y + 50;
+		playerCenterX = x + 30;
+		playerCenterY = y + 60;
 	
 	
 //		g.drawString(" Link's center X: " + playerCenterX +  "\n Link's center Y: " + playerCenterY, 500, 100);
@@ -472,7 +462,7 @@ public class Player {
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			
 			if (projectileCooldown <= 0) {
-			dungeon.currentRoom.pc.addArrow(new Arrow(x, y, this, this.playerDirection));
+			dungeon.currentRoom.pc.addArrow(new Arrow(x, y, this, this.playerDirection, true));
 			projectileCooldown = 300;
 			}
 			
