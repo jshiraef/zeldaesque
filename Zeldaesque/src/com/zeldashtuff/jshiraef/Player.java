@@ -20,7 +20,7 @@ public class Player {
 	static Animation sprite, up, down, left, right, hit, hitDown, hitUp, hitRight, hitLeft, idleDown, idleUp, idleLeft, idleRight, pushDown, pushUp, pushLeft, pushRight; //redundant variables?
 	
 	Image fullEckoSpriteSheet = new Image("res/EckoSpriteSheet2.png");
-	Image fullEckoPushing = new Image("res/EckoPushingSpriteSheet.png");
+	Image fullEckoPushing = new Image("res/EckoPushingSpriteSheet2.png");
 	Image damagedEcko = new Image("res/damagedEckoSpriteSheet.png");
 	
 	Image gameOver = new Image("res/GameOver.png");
@@ -31,15 +31,15 @@ public class Player {
 	Image walkingUp = fullEckoSpriteSheet.getSubImage(1, 312, 240, 104);
 	
 	
-	Image pushingRight = fullEckoPushing.getSubImage(1, 1, 199, 84);
-	Image pushingLeft = fullEckoPushing.getSubImage(1, 86, 199, 84);
-	Image pushingUp = fullEckoPushing.getSubImage(1, 171, 199, 84);
-	Image pushingDown = fullEckoPushing.getSubImage(1, 255, 199, 84);
+	Image pushingRight = fullEckoPushing.getSubImage(1, 1, 240, 104);
+	Image pushingLeft = fullEckoPushing.getSubImage(1, 104, 240, 104);
+	Image pushingUp = fullEckoPushing.getSubImage(1, 208, 240, 104);
+	Image pushingDown = fullEckoPushing.getSubImage(1, 312, 240, 104);
 	
-	Image damagedDown = damagedEcko.getSubImage(1, 1, 199, 84);
-	Image damagedLeft = damagedEcko.getSubImage(1, 86, 199, 84);
-	Image damagedRight = damagedEcko.getSubImage(1, 171, 199, 84);
-	Image damagedUp = damagedEcko.getSubImage(1, 255, 199, 84);
+	Image damagedDown = damagedEcko.getSubImage(1, 1, 240, 104);
+	Image damagedLeft = damagedEcko.getSubImage(1, 104, 240, 104);
+	Image damagedRight = damagedEcko.getSubImage(1, 208, 240, 104);
+	Image damagedUp = damagedEcko.getSubImage(1, 312, 240, 104);
 	
 	
 	public float x = 64f;
@@ -88,10 +88,10 @@ public class Player {
 		this.left = new Animation(new SpriteSheet(walkingLeft, 60, 104), 250);
 		this.right = new Animation(new SpriteSheet(walkingRight, 60, 104), 250);
 		
-		this.pushDown = new Animation(new SpriteSheet(pushingDown, 49, 84), 250);
-		this.pushUp = new Animation(new SpriteSheet(pushingUp, 49, 84), 250);
-		this.pushRight = new Animation(new SpriteSheet(pushingRight, 49, 84), 250);
-		this.pushLeft = new Animation(new SpriteSheet(pushingLeft, 49, 84), 250);
+		this.pushDown = new Animation(new SpriteSheet(pushingDown, 60, 104), 250);
+		this.pushUp = new Animation(new SpriteSheet(pushingUp, 60, 104), 250);
+		this.pushRight = new Animation(new SpriteSheet(pushingRight, 60, 104), 250);
+		this.pushLeft = new Animation(new SpriteSheet(pushingLeft, 60, 104), 250);
 		
 		
 		
@@ -102,10 +102,10 @@ public class Player {
 		this.idleRight = new Animation(new SpriteSheet(right.getImage(1), 60, 104), 1000);
 		
 		
-		hitDown = new Animation(new SpriteSheet(damagedDown, 49, 84), 250);
-		hitUp = new Animation(new SpriteSheet(damagedUp, 49, 84), 250);
-		hitLeft = new Animation(new SpriteSheet(damagedLeft, 49, 84), 250);
-		hitRight = new Animation(new SpriteSheet(damagedRight, 49, 84), 250);
+		hitDown = new Animation(new SpriteSheet(damagedDown, 60, 104), 250);
+		hitUp = new Animation(new SpriteSheet(damagedUp, 60, 104), 250);
+		hitLeft = new Animation(new SpriteSheet(damagedLeft, 60, 104), 250);
+		hitRight = new Animation(new SpriteSheet(damagedRight, 60, 104), 250);
 		
 		
 		sprite = idleDown; 
