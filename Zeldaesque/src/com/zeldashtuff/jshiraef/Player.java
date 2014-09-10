@@ -67,7 +67,7 @@ public class Player {
 	public int bossDamageCooldown = 0;
 	public int playerDamageCooldown = 0;
 	
-	private float speed = .2f;
+	private float speed = .15f;
 	
 	public float health = 1, maxHealth = (float) 1.5, healthBarX = 100, healthBarY = 100, healthBarWidth = 200, healthBarHeight = 10;
 	
@@ -265,10 +265,10 @@ public class Player {
 		playerTileY = Math.round(playerCenterY)/dungeon.currentRoom.room.getTileHeight();
 		
 
-		System.out.println("Player's tile is : " + playerTileX + " , " + playerTileY);
+//		System.out.println("Player's tile is : " + playerTileX + " , " + playerTileY);
 		
 		 int PlayerTileTest = dungeon.currentRoom.room.getTileId(playerTileX, playerTileY, 0);
-		 System.out.println("The player TileId is: " + PlayerTileTest);
+//		 System.out.println("The player TileId is: " + PlayerTileTest);
 		 
 
 		 

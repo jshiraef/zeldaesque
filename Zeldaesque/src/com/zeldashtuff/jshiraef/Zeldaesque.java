@@ -3,7 +3,9 @@ package com.zeldashtuff.jshiraef;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.*;
 import org.lwjgl.*;
-
+import org.jbox2d.callbacks.*;
+import org.jbox2d.common.IViewportTransform;
+import org.jbox2d.dynamics.World;
 
 
 public class Zeldaesque extends BasicGame
@@ -17,6 +19,10 @@ public class Zeldaesque extends BasicGame
 	public Player player;
 	public Dungeon dungeon;
 	
+	
+	public IViewportTransform viewport;
+	
+	private World world;
 	
 	
 	private static final int SIZE = 64;
@@ -36,8 +42,6 @@ public class Zeldaesque extends BasicGame
 	}
 
 	public void init(GameContainer arg0) throws SlickException {
-	
-		
 		dungeon = new Dungeon();
 	
 		}
